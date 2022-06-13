@@ -28,6 +28,14 @@ golem::add_module(name = "over_time_line_chart",
 golem::add_module(name = "interactive_data_table",
                   with_test = TRUE) # Interactive data table
 
+## Add internal datasets ----
+## If you have data in your package
+usethis::use_data_raw(name = "entity_time_metric_categories_df", open = FALSE)
+# ACTION: Code to generate this data frame will need to be written and ran to save the data in the package.
+
+# IMPORTANT: There may be more random datasets to add, as module development continues...
+
+
 ## Add helper functions ----
 ## Creates fct_* and utils_*
 golem::add_fct("helpers", with_test = TRUE)
@@ -39,10 +47,6 @@ golem::add_js_file("script")
 golem::add_js_handler("handlers")
 golem::add_css_file("custom")
 # golem::add_sass_file("custom")
-
-## Add internal datasets ----
-## If you have data in your package
-usethis::use_data_raw(name = "my_dataset", open = FALSE)
 
 ## Tests ----
 ## Add one line by test you want to create

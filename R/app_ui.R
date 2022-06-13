@@ -10,7 +10,10 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
-      h1("NCAA")
+      h1("NCAA"),
+      ## To be copied in the UI
+      mod_over_time_line_chart_ui("over_time_line_chart_1")
+
     )
   )
 }
@@ -38,4 +41,5 @@ golem_add_external_resources <- function() {
     # Add here other external resources
     # for example, you can add shinyalert::useShinyalert()
   )
+
 }
