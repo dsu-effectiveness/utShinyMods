@@ -11,8 +11,9 @@ app_ui <- function(request) {
     # Your application UI logic
     fluidPage(
       h1("NCAA"),
-      ## To be copied in the UI
-      mod_over_time_line_chart_ui("over_time_line_chart_1")
+      mod_over_time_line_chart_ui("over_time_line_chart_1"),
+      mod_over_time_line_chart_ui("over_time_line_chart_2"),
+      mod_over_time_line_chart_ui("over_time_line_chart_3")
 
     )
   )

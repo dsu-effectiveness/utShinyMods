@@ -35,6 +35,16 @@ usethis::use_data_raw(name = "entity_time_metric_categories_df", open = FALSE)
 
 # IMPORTANT: There may be more random datasets to add, as module development continues...
 
+# ACTION: created a sql directory in inst/
+# this is where any custom sql for this project should be stored.
+
+
+## Continuation of DEV ####
+## this is where the project currently is in development,
+## any code after this has not been ran.
+## The decision to use (or not use) the dev code below is up to the developer,
+## and should be well documented here.
+
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*

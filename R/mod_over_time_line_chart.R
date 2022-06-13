@@ -96,8 +96,15 @@ mod_over_time_line_chart_server <- function(id,
                             grouping=grouping,
                             x_label=names(time_col),
                             y_label=names(metric_col),
+                            # TODO: input$grouping_selection does not contain any names
+                            group_labeling=paste(names(input$grouping_selection),
+                                                 ": ",
+                                                 !!rlang::sym(input$grouping_selection),
+                                                 "</br>",
+                                                 sep=''),
                             title="Title of Plot",
                             sub_title="Sub Title for plot.",
+                            # TODO: input$grouping_selection does not contain any names
                             legend_title=names(input$grouping_selection)
         )
     })
