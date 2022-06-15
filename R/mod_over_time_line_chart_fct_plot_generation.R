@@ -32,7 +32,7 @@ no_format <- function(x) {
 #' @export
 #'
 #' @examples
-generate_line_chart <- function(df, x, y, x_label, y_label, x_angle=0, y_format=no_format, x_format=no_format,
+generate_line_chart <- function(df, x, y, x_label, y_label, x_angle=45, y_format=no_format, x_format=no_format,
                                 grouping=0, group_labeling="",
                                 title='', sub_title='',
                                 legend_title='', legend_position="right",
@@ -55,7 +55,15 @@ generate_line_chart <- function(df, x, y, x_label, y_label, x_angle=0, y_format=
 
     color_palette <- c( desert_sand, dixie_based_reds,
                          desert_sand, dixie_based_reds,
+                         desert_sand, dixie_based_reds,
+                        desert_sand, dixie_based_reds,
+                         desert_sand, dixie_based_reds,
                          desert_sand, dixie_based_reds )
+    color_palette <- c(color_palette, color_palette)
+    color_palette <- c(color_palette, color_palette)
+    color_palette <- c(color_palette, color_palette)
+    color_palette <- c(color_palette, color_palette)
+    color_palette <- c(color_palette, color_palette)
 
 
     ggplot_object <- ggplot2::ggplot(df, ggplot2::aes(x=as.factor({{x}}),

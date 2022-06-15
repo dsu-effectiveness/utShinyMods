@@ -10,7 +10,7 @@ generate_line_chart(
   y,
   x_label,
   y_label,
-  x_angle = 0,
+  x_angle = 45,
   y_format = no_format,
   x_format = no_format,
   grouping = 0,

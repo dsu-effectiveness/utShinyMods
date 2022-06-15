@@ -12,7 +12,8 @@ mod_over_time_line_chart_ui <- function(id){
   tagList(
     shinyjs::useShinyjs(), #TODO: is this required?
     fluidRow(
-        column(3, wellPanel( uiOutput( ns('controls_ui') ) ) ),
+        column(3, wellPanel( uiOutput( ns('grouping_selection_ui') ),
+                             uiOutput( ns('category_filter_ui') ) ) ),
         column(9, plotly::plotlyOutput( ns('over_time_line_chart'), width=NULL ) )
     )
   )
@@ -28,6 +29,8 @@ mod_over_time_line_chart_ui <- function(id){
 #' @param metric_col
 #' @param metric_summarization_function
 #' @param grouping_cols
+#' @param chart_title
+#' @param chart_sub_title
 #'
 #' Justification for using extra parameters in the Server function, can be found in the following documentation:
 #' https://shiny.rstudio.com/articles/modules.html
@@ -45,39 +48,43 @@ mod_over_time_line_chart_server <- function(id,
                                             metric_summarization_function=sum,
                                             grouping_cols=c("Category 1"="entity_category_1",
                                                             "Category 2"="entity_category_2",
-                                                            "Category 3"="entity_category_3")){
+                                                            "Category 3"="entity_category_3"),
+                                            chart_title="Title of Plot",
+                                            chart_sub_title="Sub Title for plot."){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
     # UI Generation ####
-    output$controls_ui <- renderUI({
+    output$grouping_selection_ui <- renderUI({
         tagList(
           radioButtons(ns("grouping_selection"),
                        "Grouping Options",
                        c("None"="all",
                          grouping_cols),
-                       selected="all"),
-          # TODO: This potion needs to be generated based on input$grouping_selection,
-          # to be a filter applied to the available groups.
-          #pickerInput(ns("category_selector"), paste(agg_val_desc, "Filter"),
-          #            categories,
-          #            options=list(`actions-box`=TRUE, `live-search`=TRUE),
-          #            multiple=TRUE,
-          #            selected=sample(categories, selected_count)),
+                       selected="all")
         )
+    })
+    output$category_filter_ui <- renderUI({
+          req(input$grouping_selection)
+          categories <- sort(unique(df[[input$grouping_selection]]))
+          shinyWidgets::pickerInput(ns("category_filter_selection"), "Grouping Filter",
+                      categories,
+                      options=list(`actions-box`=TRUE, `live-search`=TRUE),
+                      multiple=TRUE,
+                      selected=sample(categories, 7, replace=TRUE))
     })
 
     # Reactive Dataframe ####
     reactive_over_time_plot_df <- reactive({
         # Pause plot execution while input values evaluate. This eliminates an error message.
-        #req(input$category_selector)
+        req(input$category_filter_selection)
         req(input$grouping_selection)
 
         plot_df <- df %>%
-        #   filter(input$grouping_selection %in% input$category_selector) %>%
+            dplyr::filter(  !!rlang::sym(input$grouping_selection) %in% input$category_filter_selection ) %>%
             dplyr::group_by( !!rlang::sym(time_col), !!rlang::sym(input$grouping_selection) ) %>%
-            dplyr::summarize( y_plot=metric_summarization_function( !!rlang::sym(metric_col) ) ) %>%
-            tidyr::drop_na() %>% # TODO: do we want to drop_na() here?
+            dplyr::summarize( y_plot=metric_summarization_function( !!rlang::sym(metric_col),
+                              na.rm=TRUE ) ) %>%
             dplyr::mutate(grouping=!!rlang::sym(input$grouping_selection),
                           x_plot=!!rlang::sym(time_col) ) %>%
             dplyr::ungroup()
@@ -96,16 +103,18 @@ mod_over_time_line_chart_server <- function(id,
                             grouping=grouping,
                             x_label=names(time_col),
                             y_label=names(metric_col),
-                            # TODO: input$grouping_selection does not contain any names
-                            group_labeling=paste(names(input$grouping_selection),
+                            # TODO: input$grouping_selection does not contain any names,
+                            # only the value selected. We need the name here.
+                            group_labeling=paste(input$grouping_selection,
                                                  ": ",
                                                  !!rlang::sym(input$grouping_selection),
                                                  "</br>",
                                                  sep=''),
-                            title="Title of Plot",
-                            sub_title="Sub Title for plot.",
-                            # TODO: input$grouping_selection does not contain any names
-                            legend_title=names(input$grouping_selection)
+                            title=chart_title,
+                            sub_title=chart_sub_title,
+                            # TODO: input$grouping_selection does not contain any names,
+                            # only the value selected. We need the name here.
+                            legend_title=input$grouping_selection
         )
     })
 

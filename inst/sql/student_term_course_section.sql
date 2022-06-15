@@ -20,17 +20,17 @@ SELECT a.student_id AS student_id,
        b.course_id AS course_section_id,
 
        -- student information
-       a.primary_major_college_desc AS student_college,
-       a.primary_program_desc AS student_program,
+       COALESCE(a.primary_major_college_desc, 'Unavailable') AS student_college,
+       COALESCE(a.primary_program_desc, 'Unavailable') AS student_program,
        c.last_name || ', ' || c.first_name AS student_full_name,
        COALESCE(f.has_accepted_scholarship, FALSE) AS student_has_accepted_scholarship,
-       COALESCE(f.scholarship_amount_accepted, 0) AS student_scholarship_amount_accepted,
+       f.scholarship_amount_accepted AS student_scholarship_amount_accepted,
        -- TODO: Need student_team HERE
        -- TODO: Data for this should be in data warehouse.
 
        -- course section information
        b.grade_points AS course_section_grade_points,
-       d.course_desc AS course_section_description
+       COALESCE(d.course_desc, 'Unavailable') AS course_section_description
 
 FROM export.student_term_level a
 LEFT JOIN export.student_section b
@@ -58,4 +58,5 @@ LEFT JOIN (SELECT DISTINCT f1.student_id,
 /* END Athletic Scholarship SQL logic  */
 
 -- only pull information for student athletes
-WHERE a.is_athlete;
+WHERE a.is_athlete
+AND CAST(a.term_id AS INTEGER) >= 201740;

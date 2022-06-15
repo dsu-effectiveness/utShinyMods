@@ -15,12 +15,14 @@ Imports:
     dplyr,
     ggplot2,
     golem (>= 0.3.2),
+    here,
     magrittr,
     plotly,
     rlang,
     shiny (>= 1.7.1),
     shinyjs,
-    tidyr
+    shinyWidgets,
+    utHelpR
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
