@@ -12,9 +12,11 @@ mod_over_time_line_chart_ui <- function(id){
   tagList(
     shinyjs::useShinyjs(), #TODO: is this required?
     fluidRow(
-        column(3, wellPanel( uiOutput( ns('grouping_selection_ui') ),
-                             uiOutput( ns('category_filter_ui') ) ) ),
-        column(9, plotly::plotlyOutput( ns('over_time_line_chart'), width=NULL ) )
+        column(3, tagList( h5("Plot Controls"),
+                           uiOutput( ns('grouping_selection_ui') ),
+                           uiOutput( ns('category_filter_ui') ) ) ),
+        column(9, tagList( h5(HTML(paste(em("Interactive"), "Line Chart"))),
+                      plotly::plotlyOutput( ns('over_time_line_chart'), width=NULL ) ) )
     )
   )
 }
@@ -59,7 +61,7 @@ mod_over_time_line_chart_server <- function(id,
         tagList(
           radioButtons(ns("grouping_selection"),
                        "Grouping Options",
-                       c("None"="all",
+                       c("Individual"="all",
                          grouping_cols),
                        selected="all")
         )
@@ -105,7 +107,7 @@ mod_over_time_line_chart_server <- function(id,
                             y_label=names(metric_col),
                             # TODO: input$grouping_selection does not contain any names,
                             # only the value selected. We need the name here.
-                            group_labeling=paste(input$grouping_selection,
+                            group_labeling=paste(stringr::str_to_title(stringr::str_replace_all(input$grouping_selection, '_', ' ')),
                                                  ": ",
                                                  !!rlang::sym(input$grouping_selection),
                                                  "</br>",
@@ -114,7 +116,7 @@ mod_over_time_line_chart_server <- function(id,
                             sub_title=chart_sub_title,
                             # TODO: input$grouping_selection does not contain any names,
                             # only the value selected. We need the name here.
-                            legend_title=input$grouping_selection
+                            legend_title=stringr::str_to_title(stringr::str_replace_all(input$grouping_selection, '_', ' '))
         )
     })
 

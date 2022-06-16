@@ -20,17 +20,20 @@ SELECT a.student_id AS student_id,
        b.course_id AS course_section_id,
 
        -- student information
+       c.last_name || ', ' || c.first_name AS student_full_name,
+       a.overall_cumulative_gpa AS student_overall_cumulative_gpa,
+       (a.institutional_cumulative_credits_earned + a.transfer_cumulative_credits_earned) AS student_overall_cumulative_credits_earned,
        COALESCE(a.primary_major_college_desc, 'Unavailable') AS student_college,
        COALESCE(a.primary_program_desc, 'Unavailable') AS student_program,
-       c.last_name || ', ' || c.first_name AS student_full_name,
        COALESCE(f.has_accepted_scholarship, FALSE) AS student_has_accepted_scholarship,
        f.scholarship_amount_accepted AS student_scholarship_amount_accepted,
-       -- TODO: Need student_team HERE
-       -- TODO: Data for this should be in data warehouse.
+       -- TODO: Need student_team HERE (Data for this should be in data warehouse).
+       -- TODO: Need student_has_applied_for_graduation HERE (Data for this should be in data warehouse).
 
        -- course section information
+       COALESCE(d.course_desc, 'Unavailable') AS course_section_description,
        b.grade_points AS course_section_grade_points,
-       COALESCE(d.course_desc, 'Unavailable') AS course_section_description
+       b.final_grade AS course_section_grade
 
 FROM export.student_term_level a
 LEFT JOIN export.student_section b
@@ -58,5 +61,4 @@ LEFT JOIN (SELECT DISTINCT f1.student_id,
 /* END Athletic Scholarship SQL logic  */
 
 -- only pull information for student athletes
-WHERE a.is_athlete
-AND CAST(a.term_id AS INTEGER) >= 201740;
+WHERE a.is_athlete;

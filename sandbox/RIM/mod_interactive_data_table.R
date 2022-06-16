@@ -1,66 +1,62 @@
 # UI FUNCTION ####
 # TODO: move all data specific UI generation functions to server
-wellPanel(
+tagList(
+    shinyjs::useShinyjs(), #TODO: is this required?
     fluidRow(
-        column(4,
-               uiOutput('college_selection_ui'),
-        ),
-        column(4,
-               uiOutput('department_selection_ui')
-        )
-    ),
-    fluidRow(
-        column(4,
-               pickerInput("status_selection_workload_exploration",  "Instructor Status",
-                           all_status,
-                           options=list(`actions-box`=TRUE, `live-search`=TRUE),
-                           multiple=TRUE,
-                           selected=all_status)
-        ),
-        column(4,
-               pickerInput("rank_selection_workload_exploration",  "Instructor Rank",
-                           all_ranks,
-                           options=list(`actions-box`=TRUE, `live-search`=TRUE),
-                           multiple=TRUE,
-                           selected=all_ranks)
-        )
-    ),
-    fluidRow(
-        column(4,
-               radioButtons("time_aggregator", "Timeframe Aggregator",
-                            choices=list("Term"="term",
-                                         "Academic Year"="academic_year"),
-                            selected="term")
-        )
-    ),
-    DT::dataTableOutput("workload_summary_table")
+        column(3, wellPanel( uiOutput( ns('grouping_selection_ui') ),
+                             uiOutput( ns('category_filter_ui') ) ) ),
+        column(9, DT::dataTableOutput( ns('summary_table'), width=NULL ) )
+    )
 )
-
 
 # SERVER FUNCTION ####
 
 # UI Generation ####
-# TODO: to be filled in
+output$grouping_selection_ui <- renderUI({
+    tagList(
+      radioButtons(ns("grouping_selection"),
+                   "Grouping Options",
+                   c("None"="all",
+                     grouping_cols),
+                   selected="all")
+    )
+})
+output$category_filter_ui <- renderUI({
+      req(input$grouping_selection)
+      categories <- sort(unique(df[[input$grouping_selection]]))
+      shinyWidgets::pickerInput(ns("category_filter_selection"), "Grouping Filter",
+                  categories,
+                  options=list(`actions-box`=TRUE, `live-search`=TRUE),
+                  multiple=TRUE,
+                  selected=sample(categories, 7, replace=TRUE))
+})
 
 # Reactive Dataframe ####
-workload_exploration_df_reactive <- reactive({
-    faculty_base <- instructional_faculty_workload_df %>%
-        filter( instructor_college %in% input$college_selection &
-                    instructor_department %in% input$department_selection )
-    faculty_include <- sort(unique(faculty_base$instructor_info))
-    get_workload_exploration_df(input$time_aggregator, faculty_include) %>%
-        filter( instructor_status %in% input$status_selection_workload_exploration &
-                    instructor_rank %in% input$rank_selection_workload_exploration ) %>%
-        select(-instructor_info)
+reactive_df <- reactive({
+    # Pause plot execution while input values evaluate. This eliminates an error message.
+    # req(input$required_input)
+    req(input$category_filter_selection)
+    req(input$grouping_selection)
+
+    return_df <- df %>%
+        dplyr::filter(  !!rlang::sym(input$grouping_selection) %in% input$category_filter_selection ) %>%
+        dplyr::group_by( !!rlang::sym(time_col), !!rlang::sym(input$grouping_selection) ) %>%
+        dplyr::summarize( y_plot=metric_summarization_function( !!rlang::sym(metric_col),
+                          na.rm=TRUE ) ) %>%
+        dplyr::mutate(grouping=!!rlang::sym(input$grouping_selection),
+                      x_plot=!!rlang::sym(time_col) ) %>%
+        dplyr::ungroup()
+    # Pause plot execution if df has no values. This eliminates an error message.
+    req( nrow(return_df) > 0 )
+    return( return_df )
 })
 
 # Datatable Rendering ####
-output$workload_summary_table <- DT::renderDataTable(workload_exploration_df_reactive(),
-                                                     filter="top",
-                                                     options=list( scrollX = TRUE,
-                                                                   lengthMenu=list( c(10, 25, 100, -1),
-                                                                                    c(10, 25, 100, "All") )
-                                                     ),
-                                                     rownames=FALSE,
-                                                     colnames=colnames( clean_names(workload_exploration_df_reactive(), case="title") ) )
+output$summary_table <- DT::renderDataTable(reactive_df(),
+                                            filter="top",
+                                            options=list( scrollX = TRUE,
+                                                          lengthMenu=list( c(10, 25, 100, -1),
+                                                                           c(10, 25, 100, "All") ) ),
+                                            rownames=FALSE,
+                                            colnames=colnames( clean_names(reactive_df(), case="title") ) )
 
