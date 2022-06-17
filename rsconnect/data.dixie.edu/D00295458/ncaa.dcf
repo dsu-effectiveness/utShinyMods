@@ -1,0 +1,14 @@
+name: ncaa
+title: NCAA
+username: D00295458
+account: D00295458
+server: data.dixie.edu
+hostUrl: https://data.dixie.edu/__api__
+appId: 117
+bundleId: 3639
+url: https://data.dixie.edu/NCAA/
+when: 1655431811.56951
+lastSyncTime: 1655431811.56952
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: dev/01_start.R|dev/02_dev.R|dev/03_deploy.R|dev/run_dev.R|sandbox

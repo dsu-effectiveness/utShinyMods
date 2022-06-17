@@ -4,6 +4,7 @@
 #'     DO NOT REMOVE.
 #'
 #' @import shiny
+#' @import readxl
 #' @importFrom magrittr %>%
 #' @noRd
 app_server <- function(input, output, session) {
@@ -11,30 +12,58 @@ app_server <- function(input, output, session) {
 
   student_term_course_section <- utHelpR::get_data_from_sql_url(query_url=here::here("inst", "sql", "student_term_course_section.sql"),
                                                                 dsn="edify") %>%
-      dplyr::mutate(all="All") %>%
+      dplyr::mutate(all="All",
+                    student_term = paste(student_full_name, '|', term ),
+                    team_term = paste(student_team, '|', term ),
+                    student_course = paste(student_full_name, '|', course ) ) %>%
       dplyr::filter(term_id != '202240')
 
+  # Student Athletes Summary Module ####
   mod_interactive_data_table_server("athletes_summary_data_table",
                                     module_title="Student Athletes Summary",
                                     module_sub_title="A view of summarized student athlete data.",
-                                    table_title="",
                                     df=student_term_course_section,
-                                    entity_id_col=c("Student ID"="student_id"),
+                                    record_uniqueness_col=c("Student | Term"="student_term"),
+                                    grouping_col=c("Term"="term"),
                                     metric_columns = c("student_has_accepted_scholarship",
-                                                       "course_section_grade",
+                                                       "student_has_ever_applied_for_graduation",
                                                        "student_overall_cumulative_gpa",
                                                        "student_overall_cumulative_gpa",
                                                        "student_overall_cumulative_gpa",
                                                        "student_overall_cumulative_credits_earned",
                                                        "student_overall_cumulative_credits_earned"),
                                     metric_columns_summarization_functions=c("Has Accepted Scholarship"=any,
-                                                                             "Final Grades"=function(x){ ngram::concatenate(x, collapse=', ') },
-                                                                             "Trending GPA"=mean,
+                                                                             "Has Applied for Graduation"=any,
+                                                                             "Student GPA"=mean,
                                                                              "Above 3.2 GPA"=function(x){ all(x > 3.2) },
                                                                              "Between 3.0 and 3.19 GPA"=function(x){ all(x < 3.2 & x > 3.0) },
                                                                              "Above 120 Credits"=function(x){ all(x > 120) },
-                                                                             "Between 100 and 120 Credits"= function(x){ all(x > 100 & x < 120) }),
-                                    grouping_cols=c("Term"="term_id"))
+                                                                             "Between 100 and 120 Credits"= function(x){ all(x > 100 & x < 120) }) )
+
+  # Final Grades Module ####
+  mod_interactive_data_table_server("final_grades_data_table",
+                                    module_title="Final Grades",
+                                    module_sub_title="A view of all student athletes and their grades.",
+                                    df=student_term_course_section,
+                                    record_uniqueness_col=c("Student | Course"="student_course"),
+                                    grouping_col=c("Term"="term"),
+                                    metric_columns = c("course_section_grade"),
+                                    metric_columns_summarization_functions=c("Final Grades"=function(x){ ngram::concatenate(x, collapse=', ') }))
+
+  # Teams Module ####
+  mod_interactive_data_table_server("teams_data_table",
+                                    module_title="Teams",
+                                    module_sub_title="A view of all student athlete teams.",
+                                    df=student_term_course_section,
+                                    record_uniqueness_col=c("Team | Term"="team_term"),
+                                    grouping_col=c("Term"="term"),
+                                    metric_columns = c("student_id",
+                                                       "student_full_name",
+                                                       "student_overall_cumulative_gpa"),
+                                    metric_columns_summarization_functions=c("Number of Players"=dplyr::n_distinct,
+                                                                             "Team Members"=function(x){ ngram::concatenate(unique(x), collapse='; ') },
+                                                                             "Team GPA"=mean))
+
 
   # Trending GPA Module ####
   mod_over_time_line_chart_server("gpa_over_time_line_chart",

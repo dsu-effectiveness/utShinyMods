@@ -12,11 +12,10 @@ mod_over_time_line_chart_ui <- function(id){
   tagList(
     shinyjs::useShinyjs(), #TODO: is this required?
     fluidRow(
-        column(3, tagList( h5("Plot Controls"),
+        column(2, tagList( h5("Plot Controls"),
                            uiOutput( ns('grouping_selection_ui') ),
                            uiOutput( ns('category_filter_ui') ) ) ),
-        column(9, tagList( h5(HTML(paste(em("Interactive"), "Line Chart"))),
-                      plotly::plotlyOutput( ns('over_time_line_chart'), width=NULL ) ) )
+        column(10, tagList( plotly::plotlyOutput( ns('over_time_line_chart'), width=NULL ) ) )
     )
   )
 }

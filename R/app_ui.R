@@ -25,10 +25,10 @@ app_ui <- function(request) {
                             width="170",
                             height="50",
                             alt="UT Data"
-                    ),
-
-      ),
+                    )),
       tabPanel("Athletes Summary", mod_interactive_data_table_ui("athletes_summary_data_table")),
+      tabPanel("Final Grades", mod_interactive_data_table_ui("final_grades_data_table")),
+      tabPanel("Teams", mod_interactive_data_table_ui("teams_data_table")),
       tabPanel("Trending GPA", mod_over_time_line_chart_ui("gpa_over_time_line_chart")),
       tabPanel("Trending Credits Earned", mod_over_time_line_chart_ui("credits_earned_over_time_line_chart"))
 
