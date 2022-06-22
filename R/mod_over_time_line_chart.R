@@ -84,8 +84,7 @@ mod_over_time_line_chart_server <- function(id,
         plot_df <- df %>%
             dplyr::filter(  !!rlang::sym(input$grouping_selection) %in% input$category_filter_selection ) %>%
             dplyr::group_by( !!rlang::sym(time_col), !!rlang::sym(input$grouping_selection) ) %>%
-            dplyr::summarize( y_plot=metric_summarization_function( !!rlang::sym(metric_col),
-                              na.rm=TRUE ) ) %>%
+            dplyr::summarize( y_plot=metric_summarization_function( !!rlang::sym(metric_col) ) ) %>%
             dplyr::mutate(grouping=!!rlang::sym(input$grouping_selection),
                           x_plot=!!rlang::sym(time_col) ) %>%
             dplyr::ungroup()

@@ -31,14 +31,16 @@ app_server <- function(input, output, session) {
                                                        "student_overall_cumulative_gpa",
                                                        "student_overall_cumulative_gpa",
                                                        "student_overall_cumulative_credits_earned",
+                                                       "student_overall_cumulative_credits_earned",
                                                        "student_overall_cumulative_credits_earned"),
                                     metric_columns_summarization_functions=c("Has Accepted Scholarship"=any,
                                                                              "Has Applied for Graduation"=any,
-                                                                             "Student GPA"=mean,
-                                                                             "Above 3.2 GPA"=function(x){ all(x > 3.2) },
-                                                                             "Between 3.0 and 3.19 GPA"=function(x){ all(x < 3.2 & x > 3.0) },
-                                                                             "Above 120 Credits"=function(x){ all(x > 120) },
-                                                                             "Between 100 and 120 Credits"= function(x){ all(x > 100 & x < 120) }) )
+                                                                             "GPA"=function(x){ round(mean(x, na.rm=TRUE), 2) },
+                                                                             "Above 3.2 GPA"=function(x){ (mean(x, na.rm=TRUE) > 3.2) },
+                                                                             "Between 3.0 and 3.19 GPA"=function(x){ (mean(x, na.rm=TRUE) < 3.2 & mean(x, na.rm=TRUE) > 3.0) },
+                                                                             "Credits Earned"=function(x){mean(x, na.rm=TRUE)},
+                                                                             "Above 120 Credits"=function(x){ mean(x, na.rm=TRUE) > 120 },
+                                                                             "Between 100 and 120 Credits"= function(x){ (mean(x, na.rm=TRUE) > 100 & mean(x, na.rm=TRUE) < 120) }) )
 
   # Final Grades Module ####
   mod_interactive_data_table_server("final_grades_data_table",
@@ -48,7 +50,7 @@ app_server <- function(input, output, session) {
                                     record_uniqueness_col=c("Student | Course"="student_course"),
                                     grouping_col=c("Term"="term"),
                                     metric_columns = c("course_section_grade"),
-                                    metric_columns_summarization_functions=c("Final Grades"=function(x){ ngram::concatenate(x, collapse=', ') }))
+                                    metric_columns_summarization_functions=c("Final Grades"=function(x){ ngram::concatenate(na.omit(x), collapse=', ') }))
 
   # Teams Module ####
   mod_interactive_data_table_server("teams_data_table",
@@ -62,7 +64,7 @@ app_server <- function(input, output, session) {
                                                        "student_overall_cumulative_gpa"),
                                     metric_columns_summarization_functions=c("Number of Players"=dplyr::n_distinct,
                                                                              "Team Members"=function(x){ ngram::concatenate(unique(x), collapse='; ') },
-                                                                             "Team GPA"=mean))
+                                                                             "Team GPA"=function(x){round(mean(x, na.rm=TRUE), 2)}))
 
 
   # Trending GPA Module ####
@@ -71,7 +73,7 @@ app_server <- function(input, output, session) {
                                   entity_id_col=c("Student"="student_full_name"),
                                   time_col=c("Term"="term_id"),
                                   metric_col=c("GPA"="student_overall_cumulative_gpa"),
-                                  metric_summarization_function=mean,
+                                  metric_summarization_function=function(x){ round(mean(x, na.rm=TRUE), 2) },
                                   grouping_cols=c("Student College"="student_college",
                                                   "Student Program"="student_program",
                                                   "Has Scholarship"="student_has_accepted_scholarship"),
@@ -84,7 +86,7 @@ app_server <- function(input, output, session) {
                                   entity_id_col=c("Student"="student_full_name"),
                                   time_col=c("Term"="term_id"),
                                   metric_col=c("Average Credits Earned"="student_overall_cumulative_credits_earned"),
-                                  metric_summarization_function=mean,
+                                  metric_summarization_function=function(x){ round(mean(x, na.rm=TRUE), 2) },
                                   grouping_cols=c("Student College"="student_college",
                                                   "Student Program"="student_program",
                                                   "Has Scholarship"="student_has_accepted_scholarship"),
