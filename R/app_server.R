@@ -49,8 +49,10 @@ app_server <- function(input, output, session) {
                                     df=student_term_course_section,
                                     record_uniqueness_col=c("Student | Course"="student_course"),
                                     grouping_col=c("Term"="term"),
-                                    metric_columns = c("course_section_grade"),
-                                    metric_columns_summarization_functions=c("Final Grades"=function(x){ ngram::concatenate(na.omit(x), collapse=', ') }))
+                                    metric_columns = c("course_section_grade",
+                                                       "course_section_grade_points"),
+                                    metric_columns_summarization_functions=c("Final Grades"=function(x){ ngram::concatenate(unique(na.omit(x)), collapse=', ') },
+                                                                             "Grade Points"=function(x){ round(mean(x, na.rm=TRUE), 2) }))
 
   # Teams Module ####
   mod_interactive_data_table_server("teams_data_table",
