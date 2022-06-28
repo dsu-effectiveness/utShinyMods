@@ -42,7 +42,6 @@ mod_over_time_line_chart_ui <- function(id){
 #' @noRd
 mod_over_time_line_chart_server <- function(id,
                                             df=entity_time_metric_categories_df,
-                                            entity_id_col=c("Idenity"="entity_id"),
                                             time_col=c("Time"="time_column"),
                                             metric_col=c("Metric"="metric_column"),
                                             metric_summarization_function=sum,
@@ -65,9 +64,7 @@ mod_over_time_line_chart_server <- function(id,
         tagList(
           radioButtons(ns("grouping_selection"),
                        tags$b("Group By"),
-                       c("Individual"="all",
-                         grouping_cols),
-                       selected="all")
+                       grouping_cols)
         )
     })
     output$category_filter_ui <- renderUI({

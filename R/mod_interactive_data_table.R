@@ -21,8 +21,8 @@ mod_interactive_data_table_ui <- function(id){
 #' @noRd
 mod_interactive_data_table_server <- function(id,
                                               df=entity_time_metric_categories_df,
-                                              record_uniqueness_col=c("Time"="time_column"),
-                                              grouping_col=c("Idenity"="entity_id"),
+                                              record_uniqueness_cols=c("entity_id", "time_column"),
+                                              filter_col=c("Time"="time_column"),
                                               metric_columns = c("metric_column", "metric_column",
                                                                  "entity_category_1", "entity_category_3"),
                                               metric_columns_summarization_functions=c("SUM"=sum, "MEAN"=mean,
@@ -39,8 +39,8 @@ mod_interactive_data_table_server <- function(id,
       )
     })
     output$category_filter_ui <- renderUI({
-          categories <- sort(unique(df[[grouping_col]]), decreasing=TRUE)
-          shinyWidgets::pickerInput(ns("category_filter_selection"), paste(names(grouping_col), "Filter"),
+          categories <- sort(unique(df[[filter_col]]), decreasing=TRUE)
+          shinyWidgets::pickerInput(ns("category_filter_selection"), paste(names(filter_col), "Filter"),
                       categories,
                       options=list(`actions-box`=TRUE, `live-search`=TRUE),
                       multiple=TRUE,
@@ -54,21 +54,20 @@ mod_interactive_data_table_server <- function(id,
         req(input$category_filter_selection)
 
         return_df <- df %>%
-            dplyr::filter(  !!rlang::sym(grouping_col) %in% input$category_filter_selection ) %>%
-            dplyr::group_by( !!rlang::sym(record_uniqueness_col) )
+            dplyr::filter(  !!rlang::sym(filter_col) %in% input$category_filter_selection ) %>%
+            dplyr::group_by_at( record_uniqueness_cols )
         return_summarized_df <- return_df %>%
             dplyr::summarize()
         temp_unsummarized_df <- return_df
         for( i in 1:length(metric_columns) )  {
           temp_summarized_df <- temp_unsummarized_df %>%
               dplyr::summarize_at( c(metric_columns[i]), metric_columns_summarization_functions[i] )
-          return_summarized_df <- merge(return_summarized_df, temp_summarized_df, by=c(record_uniqueness_col))
+          return_summarized_df <- merge(return_summarized_df, temp_summarized_df, by=record_uniqueness_cols)
         }
         return_df <- return_summarized_df %>%
             dplyr::ungroup()
         column_drops <- c('all')
-        return_df <- return_df[, !(names(return_df) %in% column_drops)] %>%
-          dplyr::rename(record_uniqueness_col)
+        return_df <- return_df[, !(names(return_df) %in% column_drops)]
 
         # Pause plot execution if df has no values. This eliminates an error message.
         req( nrow(return_df) > 0 )
@@ -82,7 +81,7 @@ mod_interactive_data_table_server <- function(id,
                                                               lengthMenu=list( c(5, 10, 25, -1),
                                                                                c(5, 10, 25, "All") ) ),
                                                 rownames=FALSE,
-                                                colnames=colnames( reactive_df() ) )
+                                                colnames=colnames( janitor::clean_names( reactive_df(), case="title") ) )
 
     })
 }

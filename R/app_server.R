@@ -18,10 +18,6 @@ app_server <- function(input, output, session) {
 
   student_term_course_section <- utHelpR::get_data_from_sql_url(query_url=here::here("inst", "sql", "student_term_course_section.sql"),
                                                                 dsn="edify") %>%
-      dplyr::mutate(all="All",
-                    student_term = paste(student_full_name, '|', term ),
-                    team_term = paste(student_team, '|', term ),
-                    student_course = paste(student_full_name, '|', course ) ) %>%
       dplyr::filter(term_id != '202240')
 
   # Student Athletes Summary Module ####
@@ -29,11 +25,10 @@ app_server <- function(input, output, session) {
                                     module_title="Student Athletes",
                                     module_sub_title="A view of student athlete team, academic, and demographic data.",
                                     df=student_term_course_section,
-                                    record_uniqueness_col=c("Student | Term"="student_term"),
-                                    grouping_col=c("Term"="term"),
+                                    record_uniqueness_cols=c("student_full_name", "student_id", "term"),
+                                    filter_col=c("Term"="term"),
                                     metric_columns = c("student_team",
                                                        "student_team_eligibility",
-                                                       "student_team_status",
                                                        "student_has_accepted_scholarship",
                                                        "student_has_ever_applied_for_graduation",
                                                        "student_overall_cumulative_gpa",
@@ -54,7 +49,6 @@ app_server <- function(input, output, session) {
                                                        "student_ipeds_race_ethnicity"),
                                     metric_columns_summarization_functions=c("Team"=function(x){ ngram::concatenate(unique(na.omit(x)), collapse=', ') },
                                                                              "Team Eligibility"=function(x){ ngram::concatenate(unique(na.omit(x)), collapse=', ') },
-                                                                             "Team Status"=function(x){ ngram::concatenate(unique(na.omit(x)), collapse=', ') },
                                                                              "Has Accepted Scholarship"=any,
                                                                              "Has Applied for Graduation"=any,
                                                                              "GPA"=function(x){ round(mean(x, na.rm=TRUE), 2) },
@@ -79,8 +73,8 @@ app_server <- function(input, output, session) {
                                     module_title="Final Grades",
                                     module_sub_title="A view of all student athletes and their grades.",
                                     df=student_term_course_section,
-                                    record_uniqueness_col=c("Student | Course"="student_course"),
-                                    grouping_col=c("Term"="term"),
+                                    record_uniqueness_cols=c('student_full_name', 'student_id', 'course', 'term'),
+                                    filter_col=c("Term"="term"),
                                     metric_columns = c("course_section_grade",
                                                        "course_section_grade_points"),
                                     metric_columns_summarization_functions=c("Final Grade"=function(x){ ngram::concatenate(unique(na.omit(x)), collapse=', ') },
@@ -91,20 +85,19 @@ app_server <- function(input, output, session) {
                                     module_title="Teams",
                                     module_sub_title="A view of all student athlete teams.",
                                     df=student_term_course_section,
-                                    record_uniqueness_col=c("Team | Term"="team_term"),
-                                    grouping_col=c("Term"="term"),
+                                    record_uniqueness_cols=c("student_team", "term"),
+                                    filter_col=c("Term"="term"),
                                     metric_columns = c("student_id",
-                                                       "student_full_name",
-                                                       "student_overall_cumulative_gpa"),
+                                                       "student_overall_cumulative_gpa",
+                                                       "student_full_name"),
                                     metric_columns_summarization_functions=c("Number of Players"=dplyr::n_distinct,
-                                                                             "Team Members"=function(x){ ngram::concatenate(unique(x), collapse='; ') },
-                                                                             "Team GPA"=function(x){round(mean(x, na.rm=TRUE), 2)}))
+                                                                             "Team GPA"=function(x){round(mean(x, na.rm=TRUE), 2)},
+                                                                             "Team Members"=function(x){ ngram::concatenate(unique(x), collapse='; ') }))
 
 
   # Trending GPA Module ####
   mod_over_time_line_chart_server("gpa_over_time_line_chart",
                                   df=student_term_course_section,
-                                  entity_id_col=c("Student"="student_full_name"),
                                   time_col=c("Term"="term_id"),
                                   metric_col=c("GPA"="student_overall_cumulative_gpa"),
                                   metric_summarization_function=function(x){ round(mean(x, na.rm=TRUE), 2) },
@@ -119,7 +112,6 @@ app_server <- function(input, output, session) {
    # Trending Credit Hours Module ####
    mod_over_time_line_chart_server("credits_earned_over_time_line_chart",
                                   df=student_term_course_section,
-                                  entity_id_col=c("Student"="student_full_name"),
                                   time_col=c("Term"="term_id"),
                                   metric_col=c("Average Credits Earned"="student_overall_cumulative_credits_earned"),
                                   metric_summarization_function=function(x){ round(mean(x, na.rm=TRUE), 2) },

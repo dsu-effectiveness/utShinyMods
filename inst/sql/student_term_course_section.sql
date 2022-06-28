@@ -8,7 +8,6 @@ SELECT a.student_id AS student_id,
        -- student team information
        e.activity_desc AS student_team,
        e.eligibility_desc AS student_team_eligibility,
-       e.status_desc AS student_team_status,
 
        -- student demographics
        c.gender_code AS student_gender,
