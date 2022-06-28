@@ -22,6 +22,7 @@ SELECT a.student_id AS student_id,
        a.primary_degree_id AS student_primary_degree,
        a.primary_major_desc AS student_primary_major,
        COALESCE(a.primary_program_desc, 'Unavailable') AS student_program,
+       p.required_credits AS student_program_required_credits,
        COALESCE(a.primary_major_college_desc, 'Unavailable') AS student_college,
        COALESCE(a.primary_major_department_desc, 'Unavailable') AS student_department,
        COALESCE(a.is_graduated_from_primary_degree, FALSE) AS student_has_graduated_with_primary_degree,
@@ -40,8 +41,6 @@ SELECT a.student_id AS student_id,
 
        /*
        TODO: add these data fields
-       student_degree_required_hours
-
        student_total_remedial_credit_hours
        student_has_accepted_athletic_scholarship
 
@@ -105,6 +104,9 @@ LEFT JOIN export.student_extracurricular_activity e
 LEFT JOIN export.student_term_cohort h
        ON h.student_id = a.student_id
       AND h.term_id = a.term_id
+
+LEFT JOIN export.academic_programs p
+       ON p.program_id = a.primary_program_id
 
 LEFT JOIN export.term t
        ON a.term_id = t.term_id
