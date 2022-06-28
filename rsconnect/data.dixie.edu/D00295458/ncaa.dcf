@@ -5,10 +5,10 @@ account: D00295458
 server: data.dixie.edu
 hostUrl: https://data.dixie.edu/__api__
 appId: 117
-bundleId: 3781
+bundleId: 3859
 url: https://data.dixie.edu/NCAA/
-when: 1656108422.81699
-lastSyncTime: 1656108422.817
+when: 1656422350.99918
+lastSyncTime: 1656422350.99919
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: .Rbuildignore|dev/01_start.R|dev/02_dev.R|dev/03_deploy.R|dev/run_dev.R|man/generate_line_chart.Rd|man/no_format.Rd|man/run_app.Rd|tests/testthat/test-mod_interactive_data_table.R|tests/testthat/test-mod_over_time_line_chart.R|tests/testthat/test-mod_rate_metric_bar_chart.R|tests/testthat.R|sandbox

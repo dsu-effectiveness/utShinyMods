@@ -34,7 +34,6 @@ no_format <- function(x) {
 #' @examples
 generate_line_chart <- function(df, x, y, x_label, y_label, x_angle=45, y_format=no_format, x_format=no_format,
                                 grouping=0, group_labeling="",
-                                title='', sub_title='',
                                 legend_title='', legend_position="right",
                                 lin_reg=FALSE) {
     desert_sand <- c(
@@ -92,14 +91,7 @@ generate_line_chart <- function(df, x, y, x_label, y_label, x_angle=45, y_format
 
     plot <- plotly::ggplotly(ggplot_object, tooltip=c('text')) %>%
         plotly::config(displayModeBar=FALSE) %>%
-        plotly::layout( title=list(text = paste0(title,
-                                         '<br>',
-                                         '<sup style="color:#a6a6a6;">',
-                                         sub_title,
-                                         '</sup>',
-                                         '<br>')),
-                xaxis=list(tickangle=x_angle),
-                margin=list(t=100))
+        plotly::layout( xaxis=list(tickangle=x_angle) )
 
     return( plot )
 }

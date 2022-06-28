@@ -10,10 +10,9 @@
 mod_over_time_line_chart_ui <- function(id){
   ns <- NS(id)
   tagList(
-    shinyjs::useShinyjs(), #TODO: is this required?
+    uiOutput( ns("module_title_ui") ),
     fluidRow(
-        column(2, tagList( h5("Plot Controls"),
-                           uiOutput( ns('grouping_selection_ui') ),
+        column(2, tagList( uiOutput( ns('grouping_selection_ui') ),
                            uiOutput( ns('category_filter_ui') ) ) ),
         column(10, tagList( plotly::plotlyOutput( ns('over_time_line_chart'), width=NULL ) ) )
     )
@@ -50,16 +49,22 @@ mod_over_time_line_chart_server <- function(id,
                                             grouping_cols=c("Category 1"="entity_category_1",
                                                             "Category 2"="entity_category_2",
                                                             "Category 3"="entity_category_3"),
-                                            chart_title="Title of Plot",
-                                            chart_sub_title="Sub Title for plot."){
+                                            module_title="Title of Module",
+                                            module_sub_title="Sub Title for module."){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
     # UI Generation ####
+    output$module_title_ui <- renderUI({
+      tagList(
+        h2(module_title),
+        p(module_sub_title)
+      )
+    })
     output$grouping_selection_ui <- renderUI({
         tagList(
           radioButtons(ns("grouping_selection"),
-                       "Grouping Options",
+                       tags$b("Group By"),
                        c("Individual"="all",
                          grouping_cols),
                        selected="all")
@@ -68,7 +73,8 @@ mod_over_time_line_chart_server <- function(id,
     output$category_filter_ui <- renderUI({
           req(input$grouping_selection)
           categories <- sort(unique(df[[input$grouping_selection]]))
-          shinyWidgets::pickerInput(ns("category_filter_selection"), "Grouping Filter",
+          shinyWidgets::pickerInput(ns("category_filter_selection"),
+                                    tags$b(paste(stringr::str_to_title(stringr::str_replace_all(input$grouping_selection, '_', ' ')), "Filter")),
                       categories,
                       options=list(`actions-box`=TRUE, `live-search`=TRUE),
                       multiple=TRUE,
@@ -103,16 +109,12 @@ mod_over_time_line_chart_server <- function(id,
                             grouping=grouping,
                             x_label=names(time_col),
                             y_label=names(metric_col),
-                            # TODO: input$grouping_selection does not contain any names,
                             # only the value selected. We need the name here.
                             group_labeling=paste(stringr::str_to_title(stringr::str_replace_all(input$grouping_selection, '_', ' ')),
                                                  ": ",
                                                  !!rlang::sym(input$grouping_selection),
                                                  "</br>",
                                                  sep=''),
-                            title=chart_title,
-                            sub_title=chart_sub_title,
-                            # TODO: input$grouping_selection does not contain any names,
                             # only the value selected. We need the name here.
                             legend_title=stringr::str_to_title(stringr::str_replace_all(input$grouping_selection, '_', ' '))
         )

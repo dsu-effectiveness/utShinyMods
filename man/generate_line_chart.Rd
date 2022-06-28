@@ -15,8 +15,6 @@ generate_line_chart(
   x_format = no_format,
   grouping = 0,
   group_labeling = "",
-  title = "",
-  sub_title = "",
   legend_title = "",
   legend_position = "right",
   lin_reg = FALSE

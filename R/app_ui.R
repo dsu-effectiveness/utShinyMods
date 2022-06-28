@@ -26,7 +26,7 @@ app_ui <- function(request) {
                             height="50",
                             alt="UT Data"
                     )),
-      tabPanel("Athletes Summary", mod_interactive_data_table_ui("athletes_summary_data_table")),
+      tabPanel("Student Athletes", mod_interactive_data_table_ui("athletes_summary_data_table")),
       tabPanel("Final Grades", mod_interactive_data_table_ui("final_grades_data_table")),
       tabPanel("Teams", mod_interactive_data_table_ui("teams_data_table")),
       tabPanel("Trending GPA", mod_over_time_line_chart_ui("gpa_over_time_line_chart")),
@@ -55,9 +55,10 @@ golem_add_external_resources <- function() {
     bundle_resources(
       path = app_sys("app/www"),
       app_title = "NCAA"
-    )
+    ),
     # Add here other external resources
     # for example, you can add shinyalert::useShinyalert()
+    waiter::useWaiter() # include dependencies
   )
 
 }

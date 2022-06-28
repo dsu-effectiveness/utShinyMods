@@ -79,8 +79,8 @@ mod_interactive_data_table_server <- function(id,
     output$summary_table <- DT::renderDataTable(reactive_df(),
                                                 filter="top",
                                                 options=list( scrollX = TRUE,
-                                                              lengthMenu=list( c(10, 25, 100, -1),
-                                                                               c(10, 25, 100, "All") ) ),
+                                                              lengthMenu=list( c(5, 10, 25, -1),
+                                                                               c(5, 10, 25, "All") ) ),
                                                 rownames=FALSE,
                                                 colnames=colnames( reactive_df() ) )
 

@@ -10,9 +10,11 @@ SELECT a.student_id AS student_id,
        e.eligibility_desc AS student_team_eligibility,
        e.status_desc AS student_team_status,
 
-       -- student information
+       -- student demographics
        c.gender_code AS student_gender,
        c.ipeds_race_ethnicity AS student_ipeds_race_ethnicity,
+
+       -- student term based info
        a.overall_cumulative_gpa AS student_overall_cumulative_gpa,
        (a.institutional_cumulative_credits_earned + a.transfer_cumulative_credits_earned) AS student_overall_cumulative_credits_earned,
        (a.institutional_cumulative_attempted_credits + a.transfer_cumulative_credits_attempted) AS student_overall_cumulative_credits_attempted,
@@ -22,11 +24,11 @@ SELECT a.student_id AS student_id,
        COALESCE(a.primary_program_desc, 'Unavailable') AS student_program,
        COALESCE(a.primary_major_college_desc, 'Unavailable') AS student_college,
        COALESCE(a.primary_major_department_desc, 'Unavailable') AS student_department,
+       COALESCE(a.is_graduated_from_primary_degree, FALSE) AS student_has_graduated_with_primary_degree,
+       COALESCE( (h.is_exclusion = 'true'), FALSE) AS student_is_exclusion,
+       h.exclusions_reason_desc AS student_exclusion_reason,
        COALESCE(f.has_accepted_scholarship, FALSE) AS student_has_accepted_scholarship,
        COALESCE(g.has_ever_applied_for_graduation, FALSE) AS student_has_ever_applied_for_graduation,
-       a.is_graduated_from_primary_degree AS student_has_graduated_with_primary_degree,
-       h.is_exclusion AS student_is_exclusion,
-       h.exclusions_reason_desc AS student_exclusion_reason,
 
        -- student transfer information
        a.transfer_cumulative_credits_earned AS student_cumulative_transfer_credits_earned,
@@ -104,5 +106,10 @@ LEFT JOIN export.student_term_cohort h
        ON h.student_id = a.student_id
       AND h.term_id = a.term_id
 
+LEFT JOIN export.term t
+       ON a.term_id = t.term_id
+
 -- only pull information for student athletes
-WHERE a.is_athlete;
+WHERE a.is_athlete
+-- only pull information from Fall and Spring terms
+AND t.season IN ('Fall', 'Spring');
