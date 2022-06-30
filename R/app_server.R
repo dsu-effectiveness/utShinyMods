@@ -18,7 +18,14 @@ app_server <- function(input, output, session) {
 
   student_term_course_section <- utHelpR::get_data_from_sql_url(query_url=here::here("inst", "sql", "student_term_course_section.sql"),
                                                                 dsn="edify") %>%
-      dplyr::filter(term_id != '202240')
+    dplyr::mutate(population="All")
+
+  student_term_outcome <- utHelpR::get_data_from_sql_url(query_url=here::here("inst", "sql", "student_term_outcome.sql"),
+                                                         dsn="edify")
+
+  student_term_course_section_outcomes <- dplyr::inner_join(student_term_course_section,
+                                                          student_term_outcome,
+                                                          by=c("student_id", "term", "term_id"))
 
   # Student Athletes Summary Module ####
   mod_interactive_data_table_server("athletes_summary_data_table",
@@ -95,6 +102,29 @@ app_server <- function(input, output, session) {
                                                                              "Team Members"=function(x){ ngram::concatenate(unique(x), collapse='; ') }))
 
 
+  # Fall to Spring Retention Module ####
+  mod_rate_metric_bar_chart_server("fall_to_spring_retention_rate_metric_bar_chart",
+                                    df=student_term_course_section_outcomes,
+                                    time_col=c("Fall Term"="term"),
+                                    rate_metric_uniqueness_col=c("Student ID"="student_id"),
+                                    rate_metric_criteria_col=c("Spring Returned"="is_spring_returned"),
+                                    rate_metric_desc="Fall to Spring Retention Rate",
+                                    grouping_cols=c("Student Team"="student_team"),
+                                    module_title="Fall to Spring Retention Rates",
+                                    module_sub_title="Where we can choose, and view, the fall to spring retention rates of various student athlete groupings.")
+
+
+  # Fall to Fall Retention Module ####
+  mod_rate_metric_bar_chart_server("fall_to_fall_retention_rate_metric_bar_chart",
+                                    df=student_term_course_section_outcomes,
+                                    time_col=c("Fall Term"="term"),
+                                    rate_metric_uniqueness_col=c("Student ID"="student_id"),
+                                    rate_metric_criteria_col=c("Fall Returned"="is_fall_returned"),
+                                    rate_metric_desc="Fall to Fall Retention Rate",
+                                    grouping_cols=c("Student Team"="student_team"),
+                                    module_title="Fall to Fall Retention Rates",
+                                    module_sub_title="Where we can choose, and view, the fall to fall retention rates of various student athlete groupings.")
+
   # Trending GPA Module ####
   mod_over_time_line_chart_server("gpa_over_time_line_chart",
                                   df=student_term_course_section,
@@ -122,6 +152,8 @@ app_server <- function(input, output, session) {
                                                   "Has Accepted Scholarship"="student_has_accepted_scholarship"),
                                   module_title="Trending Credits Earned",
                                   module_sub_title="Where we can choose, and view, the trending credits earned of various student athlete groupings." )
+
+
 
   waiter::waiter_hide() # hide the waiter
 }

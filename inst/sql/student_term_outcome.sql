@@ -77,13 +77,18 @@ census_fall_returned_population AS (
 )
 SELECT a.student_id                                 AS student_id,
        a.term_id                                    AS term_id,
+       a1.term_desc                                 AS term,
        b.spring_term                                AS next_spring_term_id,
+       b1.term_desc                                 AS next_spring_term,
        d.fall_term                                  AS next_fall_term_id,
+       d1.term_desc                                 AS next_fall_term,
        COALESCE(b.is_spring_returned, FALSE)        AS is_spring_returned,
        COALESCE(c.is_census_spring_returned, FALSE) AS is_census_spring_returned,
        COALESCE(d.is_fall_returned, FALSE)          AS is_fall_returned,
        COALESCE(e.is_census_fall_returned, FALSE)   AS is_census_fall_returned
 FROM cohort_base_population a
+LEFT JOIN export.term a1
+   ON a1.term_id = a.term_id
 -- The following joins use this logic:
 -- If the next term, from the base population,
 -- equals the term of the returned population,
@@ -91,12 +96,16 @@ FROM cohort_base_population a
 LEFT JOIN current_spring_returned_population b
       ON b.student_id = a.student_id
      AND b.spring_term = a.next_spring_term
+LEFT JOIN export.term b1
+      ON CAST(b1.term_id AS integer) = b.spring_term
 LEFT JOIN census_spring_returned_population c
       ON c.student_id = a.student_id
      AND c.spring_term = a.next_spring_term
 LEFT JOIN current_fall_returned_population d
       ON d.student_id = a.student_id
      AND d.fall_term = a.next_fall_term
+LEFT JOIN export.term d1
+       ON CAST(d1.term_id AS integer) = d.fall_term
 LEFT JOIN census_fall_returned_population e
       ON e.student_id = a.student_id
      AND e.fall_term = a.next_fall_term;

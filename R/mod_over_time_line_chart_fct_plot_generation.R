@@ -37,12 +37,12 @@ generate_line_chart <- function(df, x, y, x_label, y_label, x_angle=45, y_format
                                 legend_title='', legend_position="right",
                                 lin_reg=FALSE) {
     desert_sand <- c(
-        "#E6CCB3",
-        "#B8A38F",
-        "#938272",
         "#76685B",
         "#5E5349",
-        "#4B423A")
+        "#4B423A",
+        "#938272",
+        "#B8A38F",
+        "#E6CCB3")
 
     dixie_based_reds <-c(
         "#BA1C21",
@@ -66,13 +66,13 @@ generate_line_chart <- function(df, x, y, x_label, y_label, x_angle=45, y_format
 
 
     ggplot_object <- ggplot2::ggplot(df, ggplot2::aes(x=as.factor({{x}}),
-                                                        y={{y}},
-                                                        group=as.factor({{grouping}}),
-                                                        color=as.factor({{grouping}}),
-                                                        text=paste(paste(x_label, ": ", sep=''), x_format({{x}}), "<br />",
-                                                                   paste(y_label, ": ", sep=''), y_format({{y}}), "<br />",
-                                                                   {{group_labeling}},
-                                                                   sep='') ) ) +
+                                                      y={{y}},
+                                                      group=as.factor({{grouping}}),
+                                                      color=as.factor({{grouping}}),
+                                                      text=paste(paste(x_label, ": ", sep=''), x_format({{x}}), "<br />",
+                                                                 paste(y_label, ": ", sep=''), y_format({{y}}), "<br />",
+                                                                 {{group_labeling}},
+                                                                 sep='') ) ) +
         ggplot2::geom_line() +
         ggplot2::geom_point(alpha=.8) +
         ggplot2::scale_color_manual( values=color_palette ) +

@@ -64,7 +64,8 @@ mod_over_time_line_chart_server <- function(id,
         tagList(
           radioButtons(ns("grouping_selection"),
                        tags$b("Group By"),
-                       grouping_cols)
+                       c("None"='population', grouping_cols),
+                       selected='population')
         )
     })
     output$category_filter_ui <- renderUI({
@@ -106,13 +107,11 @@ mod_over_time_line_chart_server <- function(id,
                             grouping=grouping,
                             x_label=names(time_col),
                             y_label=names(metric_col),
-                            # only the value selected. We need the name here.
                             group_labeling=paste(stringr::str_to_title(stringr::str_replace_all(input$grouping_selection, '_', ' ')),
                                                  ": ",
                                                  !!rlang::sym(input$grouping_selection),
                                                  "</br>",
                                                  sep=''),
-                            # only the value selected. We need the name here.
                             legend_title=stringr::str_to_title(stringr::str_replace_all(input$grouping_selection, '_', ' '))
         )
     })
