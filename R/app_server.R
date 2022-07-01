@@ -16,12 +16,14 @@ app_server <- function(input, output, session) {
     )
   )
 
-  student_term_course_section <- utHelpR::get_data_from_sql_url(query_url=here::here("inst", "sql", "student_term_course_section.sql"),
-                                                                dsn="edify") %>%
+  student_term_course_section <- utHelpR::get_data_from_sql_file(file_name="student_term_course_section.sql",
+                                                                 dsn="edify",
+                                                                 context="shiny") %>%
     dplyr::mutate(population="All")
 
-  student_term_outcome <- utHelpR::get_data_from_sql_url(query_url=here::here("inst", "sql", "student_term_outcome.sql"),
-                                                         dsn="edify")
+  student_term_outcome <- utHelpR::get_data_from_sql_file(file_name="student_term_outcome.sql",
+                                                          dsn="edify",
+                                                          context="shiny")
 
   student_term_course_section_outcomes <- dplyr::inner_join(student_term_course_section,
                                                           student_term_outcome,
