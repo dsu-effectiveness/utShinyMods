@@ -34,25 +34,39 @@ generate_grouped_bar_plot <- function(df, x, y, x_label, y_label, y_format=make_
                                       legend_title='', legend_position="right",
                                       plot_height=NULL) {
 
-    desert_sand <- c(
-        "#76685B",
-        "#5E5349",
-        "#4B423A",
-        "#938272",
-        "#B8A38F",
-        "#E6CCB3")
+     brookes_blues <- c(
+        "#003058",
+        "#004782",
+        "#005eac",
+        "#0075d7",
+        "#028cff",
+        "#2c9fff"
+    )
 
-    dixie_based_reds <-c(
+    rock_reds <- c(
         "#BA1C21",
         "#95161A",
         "#771215",
         "#5F0E11",
         "#4C0B0E",
-        "#3D090B")
+        "#3D090B"
+    )
 
-    color_palette <- c( desert_sand, dixie_based_reds,
-                         desert_sand, dixie_based_reds,
-                         desert_sand, dixie_based_reds )
+    desert_sands <- c(
+        "#E6CCB3",
+        "#B8A38F",
+        "#938272",
+        "#76685B",
+        "#5E5349",
+        "#4B423A"
+    )
+
+    color_palette <- c( brookes_blues, rock_reds, desert_sands )
+    color_palette <- c(color_palette, color_palette)
+    color_palette <- c(color_palette, color_palette)
+    color_palette <- c(color_palette, color_palette)
+
+
     df <- df %>%
         dplyr::arrange( {{x}} ) %>%
         dplyr::mutate( x=factor( {{x}}, levels=unique({{x}}) ) ) # update the factor levels

@@ -4,8 +4,8 @@
 #'     DO NOT REMOVE.
 #'
 #' @import shiny
-#' @import readxl
 #' @importFrom magrittr %>%
+#'
 #' @noRd
 app_server <- function(input, output, session) {
   # Your application server logic
@@ -13,7 +13,8 @@ app_server <- function(input, output, session) {
   waiter::waiter_show( # show the waiter
     html = tagList( waiter::spin_fading_circles(), # use a spinner
                     "Loading Insights..."
-    )
+    ),
+    color="#c2c5c8"
   )
 
   student_term_course_section <- utHelpR::get_data_from_sql_file(file_name="student_term_course_section.sql",
@@ -101,7 +102,7 @@ app_server <- function(input, output, session) {
                                                        "student_full_name"),
                                     metric_columns_summarization_functions=c("Number of Players"=dplyr::n_distinct,
                                                                              "Team GPA"=function(x){round(mean(x, na.rm=TRUE), 2)},
-                                                                             "Team Members"=function(x){ ngram::concatenate(unique(x), collapse='; ') }))
+                                                                             "Team Members"=function(x){ ngram::concatenate(sort(unique(x)), collapse='; ') }))
 
 
   # Fall to Spring Retention Module ####

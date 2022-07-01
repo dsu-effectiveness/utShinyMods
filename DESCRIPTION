@@ -21,16 +21,17 @@ Imports:
     magrittr,
     ngram,
     plotly,
-    readxl,
     rlang,
     scales,
     shiny (>= 1.7.1),
     shinyWidgets,
     stringr,
-    utHelpR,
+    utHelpR (>= 0.0.0.9000),
     waiter
 Suggests: 
     testthat (>= 3.0.0)
+Remotes: 
+    dsu-effectiveness/utHelpR
 Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: true

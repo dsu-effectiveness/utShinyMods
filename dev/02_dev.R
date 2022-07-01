@@ -41,6 +41,7 @@ usethis::use_data_raw(name = "entity_time_metric_categories_df", open = FALSE)
 # install.packages("devtools")
 devtools::install_github("dsu-effectiveness/utHelpR")
 
+usethis::use_dev_package("utHelpR")
 
 ## Continuation of DEV ####
 ## this is where the project currently is in development,
