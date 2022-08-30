@@ -21,9 +21,6 @@ generate_grouped_bar_plot(
 \arguments{
 \item{plot_height}{}
 }
-\value{
-
-}
 \description{
 Generate Grouped Bar Plot
 }
