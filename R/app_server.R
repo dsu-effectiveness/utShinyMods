@@ -38,8 +38,7 @@ app_server <- function(input, output, session) {
                                     record_uniqueness_cols=c("student_full_name", "student_id", "term"),
                                     filter_col=c("Term"="term"),
                                     metric_columns = c("student_team",
-                                                       "student_team_eligibility",
-                                                       "student_has_accepted_scholarship",
+                                                       "student_is_athletic_aid_awarded",
                                                        "student_has_ever_applied_for_graduation",
                                                        "student_overall_cumulative_gpa",
                                                        "student_overall_cumulative_credits_earned",
@@ -51,15 +50,10 @@ app_server <- function(input, output, session) {
                                                        "student_college",
                                                        "student_department",
                                                        "student_has_graduated_with_primary_degree",
-                                                       "student_is_exclusion",
-                                                       "student_exclusion_reason",
                                                        "student_cumulative_transfer_credits_earned",
-                                                       "student_cumulative_transfer_gpa",
-                                                       "student_gender",
-                                                       "student_ipeds_race_ethnicity"),
+                                                       "student_cumulative_transfer_gpa"),
                                     metric_columns_summarization_functions=c("Team"=function(x){ ngram::concatenate(unique(na.omit(x)), collapse=', ') },
-                                                                             "Team Eligibility"=function(x){ ngram::concatenate(unique(na.omit(x)), collapse=', ') },
-                                                                             "Has Accepted Scholarship"=any,
+                                                                             "Is Athletic Aid Awarded"=any,
                                                                              "Has Applied for Graduation"=any,
                                                                              "GPA"=function(x){ round(mean(x, na.rm=TRUE), 2) },
                                                                              "Credits Earned"=function(x){ mean(x, na.rm=TRUE) },
@@ -71,12 +65,8 @@ app_server <- function(input, output, session) {
                                                                              "College"=dplyr::first,
                                                                              "Department"=dplyr::first,
                                                                              "Has Graduated"=any,
-                                                                             "Is Exclusion"=any,
-                                                                             "Exclusion Reason"=dplyr::first,
                                                                              "Transfer Credits Earned"=function(x){ mean(x, na.rm=TRUE) },
-                                                                             "Transfer GPA"=function(x){ mean(x, na.rm=TRUE) },
-                                                                             "Gender"=dplyr::first,
-                                                                             "Race/Ethnicity"=dplyr::first) )
+                                                                             "Transfer GPA"=function(x){ mean(x, na.rm=TRUE) } ) )
 
   # Final Grades Module ####
   mod_interactive_data_table_server("final_grades_data_table",
@@ -101,7 +91,7 @@ app_server <- function(input, output, session) {
                                                        "student_overall_cumulative_gpa",
                                                        "student_full_name"),
                                     metric_columns_summarization_functions=c("Number of Players"=dplyr::n_distinct,
-                                                                             "Team GPA"=function(x){round(mean(x, na.rm=TRUE), 2)},
+                                                                             "Team GPA"=function(x){ round(mean(x, na.rm=TRUE), 2) },
                                                                              "Team Members"=function(x){ ngram::concatenate(sort(unique(x)), collapse='; ') }))
 
 
@@ -138,7 +128,7 @@ app_server <- function(input, output, session) {
                                                   "Student College"="student_college",
                                                   "Student Department"="student_department",
                                                   "Student Program"="student_program",
-                                                  "Has Accepted Scholarship"="student_has_accepted_scholarship"),
+                                                  "Is Athletic Aid Awarded"="student_is_athletic_aid_awarded"),
                                   module_title="Trending GPA",
                                   module_sub_title="Where we can choose, and view, the trending GPA of various student athlete groupings." )
 
@@ -152,7 +142,7 @@ app_server <- function(input, output, session) {
                                                   "Student College"="student_college",
                                                   "Student Department"="student_department",
                                                   "Student Program"="student_program",
-                                                  "Has Accepted Scholarship"="student_has_accepted_scholarship"),
+                                                  "Is Athletic Aid Awarded"="student_is_athletic_aid_awarded"),
                                   module_title="Trending Credits Earned",
                                   module_sub_title="Where we can choose, and view, the trending credits earned of various student athlete groupings." )
 

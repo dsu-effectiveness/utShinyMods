@@ -23,9 +23,6 @@ generate_line_chart(
 \arguments{
 \item{lin_reg}{}
 }
-\value{
-
-}
 \description{
 Title
 }

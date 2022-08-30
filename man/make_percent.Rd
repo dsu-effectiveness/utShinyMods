@@ -9,9 +9,6 @@ make_percent(x)
 \arguments{
 \item{x}{}
 }
-\value{
-
-}
 \description{
 Make Percent
 }
