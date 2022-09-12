@@ -17,21 +17,13 @@ app_server <- function(input, output, session) {
     color="#c2c5c8"
   )
 
-  student_term_course_section <- utHelpR::get_data_from_sql_file(file_name="student_term_course_section.sql",
-                                                                 dsn="edify",
-                                                                 context="shiny") %>%
-    dplyr::mutate(population="All")
+  student_term_course_section <- utHelpR::get_data_from_sql_file(file_name="student_term_course_section.sql", dsn="edify", context="shiny")
 
-  student_term_outcome <- utHelpR::get_data_from_sql_file(file_name="student_term_outcome.sql",
-                                                          dsn="edify",
-                                                          context="shiny")
+  academic_portal_upload_report <- utHelpR::get_data_from_sql_file(file_name="academic_portal_upload_report.sql", dsn="edify", context="shiny")
 
-  student_term_course_section_outcomes <- dplyr::inner_join(student_term_course_section,
-                                                          student_term_outcome,
-                                                          by=c("student_id", "term", "term_id"))
 
   # Student Athletes Summary Module ####
-  mod_interactive_data_table_server("athletes_summary_data_table",
+  mod_summarized_data_table_server("athletes_summary_data_table",
                                     module_title="Student Athletes",
                                     module_sub_title="A view of student athlete team, academic, and demographic data.",
                                     df=student_term_course_section,
@@ -52,7 +44,7 @@ app_server <- function(input, output, session) {
                                                        "student_has_graduated_with_primary_degree",
                                                        "student_cumulative_transfer_credits_earned",
                                                        "student_cumulative_transfer_gpa"),
-                                    metric_columns_summarization_functions=c("Team"=function(x){ ngram::concatenate(unique(na.omit(x)), collapse=', ') },
+                                    metric_columns_summarization_functions=c("Team"=function(x){ as.factor( ngram::concatenate(unique(na.omit(x)), collapse=', ') ) },
                                                                              "Is Athletic Aid Awarded"=any,
                                                                              "Has Applied for Graduation"=any,
                                                                              "GPA"=function(x){ round(mean(x, na.rm=TRUE), 2) },
@@ -69,7 +61,7 @@ app_server <- function(input, output, session) {
                                                                              "Transfer GPA"=function(x){ mean(x, na.rm=TRUE) } ) )
 
   # Final Grades Module ####
-  mod_interactive_data_table_server("final_grades_data_table",
+  mod_summarized_data_table_server("final_grades_data_table",
                                     module_title="Final Grades",
                                     module_sub_title="A view of all student athletes and their grades.",
                                     df=student_term_course_section,
@@ -81,7 +73,7 @@ app_server <- function(input, output, session) {
                                                                              "Grade Points"=function(x){ round(mean(x, na.rm=TRUE), 2) }))
 
   # Teams Module ####
-  mod_interactive_data_table_server("teams_data_table",
+  mod_summarized_data_table_server("teams_data_table",
                                     module_title="Teams",
                                     module_sub_title="A view of all student athlete teams.",
                                     df=student_term_course_section,
@@ -97,10 +89,10 @@ app_server <- function(input, output, session) {
 
   # Fall to Spring Retention Module ####
   mod_rate_metric_bar_chart_server("fall_to_spring_retention_rate_metric_bar_chart",
-                                    df=student_term_course_section_outcomes,
+                                    df=student_term_course_section,
                                     time_col=c("Fall Term"="term"),
                                     rate_metric_uniqueness_col=c("Student ID"="student_id"),
-                                    rate_metric_criteria_col=c("Spring Returned"="is_spring_returned"),
+                                    rate_metric_criteria_col=c("Spring Returned"="is_returned_next_spring"),
                                     rate_metric_desc="Fall to Spring Retention Rate",
                                     grouping_cols=c("Student Team"="student_team"),
                                     module_title="Fall to Spring Retention Rates",
@@ -109,10 +101,10 @@ app_server <- function(input, output, session) {
 
   # Fall to Fall Retention Module ####
   mod_rate_metric_bar_chart_server("fall_to_fall_retention_rate_metric_bar_chart",
-                                    df=student_term_course_section_outcomes,
+                                    df=student_term_course_section,
                                     time_col=c("Fall Term"="term"),
                                     rate_metric_uniqueness_col=c("Student ID"="student_id"),
-                                    rate_metric_criteria_col=c("Fall Returned"="is_fall_returned"),
+                                    rate_metric_criteria_col=c("Fall Returned"="is_returned_next_fall"),
                                     rate_metric_desc="Fall to Fall Retention Rate",
                                     grouping_cols=c("Student Team"="student_team"),
                                     module_title="Fall to Fall Retention Rates",
@@ -146,6 +138,11 @@ app_server <- function(input, output, session) {
                                   module_title="Trending Credits Earned",
                                   module_sub_title="Where we can choose, and view, the trending credits earned of various student athlete groupings." )
 
+  # Academic Portal Report Module ####
+  mod_downloadable_data_table_server("academic_portal_upload_report_downloadable_data_table",
+                                     df=academic_portal_upload_report,
+                                     module_title="Academic Portal Report",
+                                     module_sub_title="A downloadable report, with data required for reporting to NCAA.")
 
 
   waiter::waiter_hide() # hide the waiter

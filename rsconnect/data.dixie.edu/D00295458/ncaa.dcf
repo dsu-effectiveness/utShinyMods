@@ -11,4 +11,4 @@ when: 1661901616.14415
 lastSyncTime: 1661901616.14417
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: dev/01_start.R|dev/02_dev.R|dev/03_deploy.R|dev/run_dev.R|man/generate_grouped_bar_plot.Rd|man/generate_line_chart.Rd|man/make_percent.Rd|man/no_format.Rd|man/run_app.Rd|README.md|README.Rmd|tests/testthat/test-mod_interactive_data_table.R|tests/testthat/test-mod_over_time_line_chart.R|tests/testthat/test-mod_rate_metric_bar_chart.R|tests/testthat.R|sandbox
+ignoredFiles: dev/01_start.R|dev/02_dev.R|dev/03_deploy.R|dev/run_dev.R|man/generate_grouped_bar_plot.Rd|man/generate_line_chart.Rd|man/make_percent.Rd|man/no_format.Rd|man/run_app.Rd|README.md|README.Rmd|tests/testthat/test-mod_summarized_data_table.R|tests/testthat/test-mod_over_time_line_chart.R|tests/testthat/test-mod_rate_metric_bar_chart.R|tests/testthat.R|sandbox

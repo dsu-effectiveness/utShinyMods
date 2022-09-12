@@ -25,11 +25,10 @@ golem::add_module(name = "rate_metric_bar_chart",
 golem::add_module(name = "over_time_line_chart",
                   fct = "plot_generation",
                   with_test = TRUE) # Over time line chart
-# TODO: decide on name and structure of separate modules
-golem::add_module(name = "interactive_data_table",
-                  with_test = TRUE) # Interactive data table, summarize version
-golem::add_module(name = "interactive_data_table",
-                  with_test = TRUE) # Interactive data table, audit version
+golem::add_module(name = "summarized_data_table",
+                  with_test = TRUE) # Interactive data table, summarized version
+golem::add_module(name = "downloadable_data_table",
+                  with_test = TRUE) # Interactive data table, downloadable version
 
 ## Add internal datasets ----
 ## If you have data in your package

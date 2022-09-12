@@ -1,0 +1,32 @@
+
+
+```{r}
+library(utHelpR)
+library(tidyverse)
+
+student_term_course_section <- utHelpR::get_data_from_sql_file(file_name="student_term_course_section.sql",
+                                                             dsn="edify",
+                                                             context="shiny")
+
+student_term_outcome <- utHelpR::get_data_from_sql_file(file_name="student_term_outcome.sql",
+                                                      dsn="edify",
+                                                      context="shiny")
+
+student_term_course_section_outcomes <- dplyr::inner_join(student_term_course_section,
+                                                          student_term_outcome,
+                                                          by=c("student_id", "term", "term_id"))
+
+```
+
+
+```{r}
+
+fall_retention_check <- student_term_course_section_outcomes %>%
+    mutate(fall_retention_match = (is_fall_returned == is_returned_next_fall) ) %>%
+    filter(fall_retention_match)
+
+spring_retention_check <- student_term_course_section_outcomes %>%
+    mutate(spring_retention_match = (is_spring_returned == is_returned_next_spring) ) %>%
+    filter(spring_retention_match)
+
+```

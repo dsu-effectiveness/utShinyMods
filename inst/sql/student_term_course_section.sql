@@ -5,20 +5,9 @@ SELECT a.student_id AS student_id,
        b.course_id AS course_section_id,
        COALESCE(d.course_desc, 'Unavailable') AS course,
 
-       -- student demographics
-       c.gender_code AS student_gender,
-       c.ipeds_race_ethnicity AS student_ipeds_race_ethnicity,
-
-       -- student team information
        a.athlete_activity_desc AS student_team,
 
-       -- TODO: what is the difference between these?
-       e.eligibility_desc AS student_team_eligibility,
-       a.is_exhausted_eligibility,
-
        COALESCE(c.has_ever_applied_for_graduation, FALSE) AS student_has_ever_applied_for_graduation,
-
-       -- student term based info
        a.overall_cumulative_gpa AS student_overall_cumulative_gpa,
        (a.institutional_cumulative_credits_earned + a.transfer_cumulative_credits_earned) AS student_overall_cumulative_credits_earned,
        (a.institutional_cumulative_attempted_credits + a.transfer_cumulative_credits_attempted) AS student_overall_cumulative_credits_attempted,
@@ -30,8 +19,6 @@ SELECT a.student_id AS student_id,
        COALESCE(p.college_abbrv, 'Unavailable') AS student_college,
        COALESCE(p.department_desc, 'Unavailable') AS student_department,
        COALESCE(a.is_graduated_from_primary_degree, FALSE) AS student_has_graduated_with_primary_degree,
-       COALESCE( (h.is_exclusion = 'true'), FALSE) AS student_is_exclusion,
-       h.exclusions_reason_desc AS student_exclusion_reason,
        COALESCE(a.is_athletic_aid_awarded, FALSE) AS student_is_athletic_aid_awarded,
 
        -- student transfer information
@@ -40,37 +27,13 @@ SELECT a.student_id AS student_id,
 
        -- course section information
        b.grade_points AS course_section_grade_points,
-       b.final_grade AS course_section_grade
+       b.final_grade AS course_section_grade,
 
-/*
-Student Athlete Last Name
-Student Athlete First Name
-Student Athlete Middle Initial
-Student Athlete School ID Number
-NCAA ID
-Student Athlete Gender
-Student Athlete Ethnicity
-First Year Your University
-First Term Your University
-Earned Associates Degree
-Summer Bridge Program
-Degree Code (CIP)
-Cumulative Credit Hours Earned Towards Degree
-Total Hours Required for Degree
-AP Credits
-CLEP Credits
-Credits Earned Prior to Full-Time Enrollment
-This Term Code
-Met Cohort Definition
-Hours Attempted
-Hours Earned
-Remedial Hours
-GPA
-Cumulative GPA
-Sport Code
-Received Athletics Aid
-Exhausted Eligibility
- */
+       -- retention information
+       a.is_returned_next_fall,
+       a.is_returned_next_spring,
+
+       'All' AS population
 
 FROM export.student_term_level a
 LEFT JOIN export.student_section b
@@ -80,10 +43,6 @@ LEFT JOIN export.student c
        ON a.student_id = c.student_id
 LEFT JOIN export.course d
        ON b.course_id = d.course_id
-LEFT JOIN export.student_extracurricular_activity e
-       ON a.student_id = e.student_id
-      AND a.term_id = e.term_id
-      AND e.activity_type_desc = 'Sports'
 LEFT JOIN export.student_term_cohort h
        ON h.student_id = a.student_id
       AND h.cohort_start_term_id = a.term_id
@@ -94,4 +53,6 @@ LEFT JOIN export.term t
 -- only pull information for student athletes
 WHERE a.is_athlete
 -- only pull information from Fall and Spring terms
-AND t.season IN ('Fall', 'Spring');
+AND t.season IN ('Fall', 'Spring')
+AND a.is_enrolled
+AND a.is_primary_level;

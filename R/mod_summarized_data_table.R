@@ -1,4 +1,4 @@
-#' interactive_data_table UI Function
+#' summarized_data_table UI Function
 #'
 #' @description A shiny Module.
 #'
@@ -7,7 +7,7 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
-mod_interactive_data_table_ui <- function(id){
+mod_summarized_data_table_ui <- function(id){
   ns <- NS(id)
   tagList(
     uiOutput( ns("module_title_ui") ),
@@ -16,10 +16,10 @@ mod_interactive_data_table_ui <- function(id){
   )
 }
 
-#' interactive_data_table Server Functions
+#' summarized_data_table Server Functions
 #'
 #' @noRd
-mod_interactive_data_table_server <- function(id,
+mod_summarized_data_table_server <- function(id,
                                               df=entity_time_metric_categories_df,
                                               record_uniqueness_cols=c("entity_id", "time_column"),
                                               filter_col=c("Time"="time_column"),
@@ -53,7 +53,9 @@ mod_interactive_data_table_server <- function(id,
         # req(input$required_input)
         req(input$category_filter_selection)
 
-        return_df <- df %>%
+        return_df <- as.data.frame(unclass(df), stringsAsFactors = TRUE)
+
+        return_df <- return_df %>%
             dplyr::filter(  !!rlang::sym(filter_col) %in% input$category_filter_selection ) %>%
             dplyr::group_by_at( record_uniqueness_cols )
         return_summarized_df <- return_df %>%
@@ -87,7 +89,7 @@ mod_interactive_data_table_server <- function(id,
 }
 
 ## To be copied in the UI
-# mod_interactive_data_table_ui("interactive_data_table_1")
+# mod_summarized_data_table_ui("summarized_data_table_1")
 
 ## To be copied in the server
-# mod_interactive_data_table_server("interactive_data_table_1")
+# mod_summarized_data_table_server("summarized_data_table_1")
