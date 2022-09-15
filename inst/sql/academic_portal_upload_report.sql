@@ -1,4 +1,6 @@
 SELECT
+    a.term_id,
+    a1.academic_year_code,
 -- Student Athlete Last Name
     b.last_name AS student_athlete_last_name,
 -- Student Athlete First Name
@@ -68,16 +70,14 @@ SELECT
     END AS this_term_code,
 -- Met Cohort Definition
     -- TODO: what does this mean? Translates to boolean of in a team and received athletic aid.
+    -- This is on a team and received athletic aid and the NCAA coordinator will change this if it needs to be changed
 -- Hours Attempted
-    -- TODO: verify that this is the correct credit hours for this field
-    a.transfer_cumulative_credits_attempted + a.institutional_cumulative_attempted_credits AS hours_attempted,
+    a.institutional_attempted_credits AS hours_attempted,
 -- Hours Earned
-    -- TODO: verify that this is the correct credit hours for this field
-    a.transfer_cumulative_credits_earned + a.institutional_cumulative_credits_earned AS hours_earned,
+    a.institutional_earned_credits AS hours_earned,
 -- Remedial Hours
     a.total_remedial_hours AS remedial_hours,
 -- GPA
-    -- TODO: verify that this is the correct GPA for this field
     a.overall_gpa AS gpa,
 -- Cumulative GPA
     a.overall_cumulative_gpa AS cumulative_gpa,
@@ -108,6 +108,7 @@ SELECT
     CASE WHEN a.is_exhausted_eligibility THEN 'Y'
         ELSE 'N'
     END AS exhausted_eligibility
+
 FROM export.student_term_level a
 LEFT JOIN export.term a1
        ON a1.term_id = a.term_id
@@ -118,8 +119,12 @@ LEFT JOIN export.academic_programs c
 -- More info on first registered term
 LEFT JOIN export.term d
        ON d.term_id = a.first_registered_term_id
+
 WHERE a.is_athlete
 AND a.is_primary_level
+AND a.is_degree_seeking
 AND a.is_enrolled
--- TODO: determine what term is needed for reporting
-AND a.term_id >= (SELECT term_id FROM export.term WHERE is_previous_term);
+AND a1.academic_year_code::INTEGER = (SELECT (a2.academic_year_code::INTEGER - 1) AS previous_academic_year_code
+                                      FROM export.term a2
+                                      WHERE a2.is_current_term)
+AND a1.season IN ('Fall', 'Spring');
