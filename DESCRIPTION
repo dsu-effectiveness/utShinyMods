@@ -21,13 +21,15 @@ Imports:
     magrittr,
     ngram,
     plotly,
+    readr,
     rlang,
     scales,
     shiny (>= 1.7.1),
     shinyWidgets,
     stringr,
     utHelpR (>= 0.0.0.9000),
-    waiter
+    waiter,
+    writexl
 Suggests: 
     testthat (>= 3.0.0)
 Remotes: 
