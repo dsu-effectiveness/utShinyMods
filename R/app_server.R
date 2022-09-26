@@ -19,6 +19,9 @@ app_server <- function(input, output, session) {
 
   student_term_course_section <- utHelpR::get_data_from_sql_file(file_name="student_term_course_section.sql", dsn="edify", context="shiny")
 
+  student_term_course_section_retention_mod <- student_term_course_section %>%
+    dplyr::filter( season == "Fall" )
+
   academic_portal_upload_report <- utHelpR::get_data_from_sql_file(file_name="academic_portal_upload_report.sql", dsn="edify", context="shiny")
 
 
@@ -89,7 +92,7 @@ app_server <- function(input, output, session) {
 
   # Fall to Spring Retention Module ####
   mod_rate_metric_bar_chart_server("fall_to_spring_retention_rate_metric_bar_chart",
-                                    df=student_term_course_section,
+                                    df=student_term_course_section_retention_mod,
                                     time_col=c("Fall Term"="term"),
                                     rate_metric_uniqueness_col=c("Student ID"="student_id"),
                                     rate_metric_criteria_col=c("Spring Returned"="is_returned_next_spring"),
@@ -101,7 +104,7 @@ app_server <- function(input, output, session) {
 
   # Fall to Fall Retention Module ####
   mod_rate_metric_bar_chart_server("fall_to_fall_retention_rate_metric_bar_chart",
-                                    df=student_term_course_section,
+                                    df=student_term_course_section_retention_mod,
                                     time_col=c("Fall Term"="term"),
                                     rate_metric_uniqueness_col=c("Student ID"="student_id"),
                                     rate_metric_criteria_col=c("Fall Returned"="is_returned_next_fall"),

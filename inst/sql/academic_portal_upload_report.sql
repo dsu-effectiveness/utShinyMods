@@ -103,7 +103,7 @@ SELECT
 -- Received Athletics Aid
     CASE WHEN a.is_athletic_aid_awarded THEN 'Y'
         ELSE 'N'
-    END AS recived_athletics_aid,
+    END AS received_athletics_aid,
 -- Exhausted Eligibility
     CASE WHEN a.is_exhausted_eligibility THEN 'Y'
         ELSE 'N'

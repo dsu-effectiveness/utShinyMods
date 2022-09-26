@@ -2,6 +2,7 @@ SELECT a.student_id AS student_id,
        c.last_name || ', ' || c.first_name AS student_full_name,
        a.term_id AS term_id,
        a.term_desc AS term,
+       t.season AS season,
        b.course_id AS course_section_id,
        COALESCE(d.course_desc, 'Unavailable') AS course,
 
