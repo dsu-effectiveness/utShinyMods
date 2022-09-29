@@ -1,15 +1,14 @@
 #' over_time_line_chart UI Function
 #'
+#' @description A shiny Module.
+#'
 #' To be copied in the UI
 #' mod_over_time_line_chart_ui("over_time_line_chart_1")
 #'
 #' To be copied in the server
 #' mod_over_time_line_chart_server("over_time_line_chart_1")'
-#' @description A shiny Module.
 #'
 #' @param id A unique identifier, linking the UI to the Server
-#'
-#' @noRd
 #'
 #' @importFrom shiny NS tagList
 #'
@@ -51,8 +50,6 @@ mod_over_time_line_chart_ui <- function(id){
 #' "You can define the function so that it takes any number of additional parameters, including ..., so that whoever uses the module can customize what the module does."
 #'
 #' @importFrom magrittr %>%
-#'
-#' @noRd
 #'
 #' @export
 mod_over_time_line_chart_server <- function(id,
