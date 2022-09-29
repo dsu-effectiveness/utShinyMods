@@ -27,6 +27,7 @@ mod_help_ui <- function(id){
 #'
 #' To be copied in the server
 #' mod_help_server("help_1")'
+#'
 #' @export
 mod_help_server <- function(id){
   moduleServer( id, function(input, output, session){

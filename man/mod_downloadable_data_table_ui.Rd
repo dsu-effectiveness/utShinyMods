@@ -2,9 +2,7 @@
 % Please edit documentation in R/mod_downloadable_data_table.R
 \name{mod_downloadable_data_table_ui}
 \alias{mod_downloadable_data_table_ui}
-\title{downloadable_data_table UI Function
-To be copied in the UI
-mod_downloadable_data_table_ui("downloadable_data_table_1")}
+\title{downloadable_data_table UI Function}
 \usage{
 mod_downloadable_data_table_ui(id)
 }
@@ -15,6 +13,9 @@ mod_downloadable_data_table_ui(id)
 A shiny Module.
 }
 \details{
+To be copied in the UI
+mod_downloadable_data_table_ui("downloadable_data_table_1")
+
 To be copied in the server
 mod_downloadable_data_table_server("downloadable_data_table_1")'
 }

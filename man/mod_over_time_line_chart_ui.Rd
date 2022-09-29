@@ -11,7 +11,8 @@ mod_over_time_line_chart_ui(id)
 }
 \description{
 A shiny Module.
-
+}
+\details{
 To be copied in the UI
 mod_over_time_line_chart_ui("over_time_line_chart_1")
 

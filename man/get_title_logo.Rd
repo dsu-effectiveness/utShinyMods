@@ -2,13 +2,10 @@
 % Please edit documentation in R/utils_style.R
 \name{get_title_logo}
 \alias{get_title_logo}
-\title{Title}
+\title{Get Title Logo}
 \usage{
 get_title_logo(right_aligned_title = "Shiny Dashboard")
 }
 \description{
-Create title logo
-}
-\details{
 Returns UT logo with correct dimensions for app title.
 }

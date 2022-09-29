@@ -1,7 +1,5 @@
 
-#' Title
-#'
-#' Create title logo
+#' Get Title Logo
 #'
 #' Returns UT logo with correct dimensions for app title.
 #'
@@ -27,11 +25,10 @@ get_title_logo <- function(right_aligned_title="Shiny Dashboard") {
     )
 }
 
-#' Title
+#' Get Theme
 #'
-#' Create title logo
+#' A custom theme.
 #'
-#' Returns UT logo with correct dimensions for app title.
 #'
 #' @return
 #' @export

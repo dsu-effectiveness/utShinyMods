@@ -11,7 +11,8 @@ mod_rate_metric_bar_chart_ui(id)
 }
 \description{
 A shiny Module.
-
+}
+\details{
 To be copied in the UI
 mod_rate_metric_bar_chart_ui("rate_metric_bar_chart_1")
 

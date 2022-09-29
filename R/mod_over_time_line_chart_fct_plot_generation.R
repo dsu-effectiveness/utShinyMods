@@ -1,16 +1,5 @@
-#' Title
-#'
-#' @param x
-#'
-#' @return
-#' @export
-#'
-#' @examples
-no_format <- function(x) {
-    return( x )
-}
 
-#' Title
+#' Generate Line Chart
 #'
 #' @param df
 #' @param x
@@ -32,7 +21,9 @@ no_format <- function(x) {
 #' @export
 #'
 #' @examples
-generate_line_chart <- function(df, x, y, x_label, y_label, x_angle=45, y_format=no_format, x_format=no_format,
+generate_line_chart <- function(df, x, y, x_label, y_label,
+                                x_angle=45,
+                                y_format=function(x){x}, x_format=function(x){x},
                                 grouping=0, group_labeling="",
                                 legend_title='', legend_position="right",
                                 lin_reg=FALSE) {

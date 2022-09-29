@@ -31,6 +31,8 @@ golem::add_module(name = "downloadable_data_table",
                   with_test = TRUE) # Interactive data table, downloadable version
 golem::add_module(name = "help",
                   with_test = TRUE) # help module
+golem::add_module(name = "sunburst_diagram",
+                  with_test = TRUE) # Sunburst diagram
 
 ## Add internal datasets ----
 ## If you have data in your package
@@ -43,9 +45,9 @@ usethis::use_data_raw(name = "entity_time_metric_categories_df", open = FALSE)
 # this is where any custom sql for this project should be stored.
 
 # install.packages("devtools")
-devtools::install_github("dsu-effectiveness/utHelpR")
+devtools::install_github("dsu-effectiveness/utVizSunburst")
 
-usethis::use_dev_package("utHelpR")
+usethis::use_dev_package("utVizSunburst")
 
 
 ## Add helper functions ----

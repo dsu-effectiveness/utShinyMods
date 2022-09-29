@@ -1,4 +1,5 @@
 #' downloadable_data_table UI Function
+#'
 #' To be copied in the UI
 #' mod_downloadable_data_table_ui("downloadable_data_table_1")
 #'

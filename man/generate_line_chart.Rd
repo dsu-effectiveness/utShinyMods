@@ -2,7 +2,7 @@
 % Please edit documentation in R/mod_over_time_line_chart_fct_plot_generation.R
 \name{generate_line_chart}
 \alias{generate_line_chart}
-\title{Title}
+\title{Generate Line Chart}
 \usage{
 generate_line_chart(
   df,
@@ -11,8 +11,12 @@ generate_line_chart(
   x_label,
   y_label,
   x_angle = 45,
-  y_format = no_format,
-  x_format = no_format,
+  y_format = function(x) {
+     x
+ },
+  x_format = function(x) {
+     x
+ },
   grouping = 0,
   group_labeling = "",
   legend_title = "",
@@ -24,5 +28,5 @@ generate_line_chart(
 \item{lin_reg}{}
 }
 \description{
-Title
+Generate Line Chart
 }
