@@ -4,7 +4,7 @@
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'
-#' @noRd
+#' @export
 #'
 #' @importFrom shiny NS tagList
 mod_summarized_data_table_ui <- function(id){
@@ -18,9 +18,15 @@ mod_summarized_data_table_ui <- function(id){
 
 #' summarized_data_table Server Functions
 #'
-#' @noRd
+#' To be copied in the UI
+#' mod_summarized_data_table_ui("summarized_data_table_1")
+#'
+#' To be copied in the server
+#' mod_summarized_data_table_server("summarized_data_table_1")
+#'
+#' @export
 mod_summarized_data_table_server <- function(id,
-                                              df=entity_time_metric_categories_df,
+                                              df=utShinyMods::entity_time_metric_categories_df,
                                               record_uniqueness_cols=c("entity_id", "time_column"),
                                               filter_col=c("Time"="time_column"),
                                               metric_columns = c("metric_column", "metric_column",
@@ -88,8 +94,3 @@ mod_summarized_data_table_server <- function(id,
     })
 }
 
-## To be copied in the UI
-# mod_summarized_data_table_ui("summarized_data_table_1")
-
-## To be copied in the server
-# mod_summarized_data_table_server("summarized_data_table_1")

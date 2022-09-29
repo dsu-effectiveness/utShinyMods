@@ -1,10 +1,15 @@
 #' downloadable_data_table UI Function
+#' To be copied in the UI
+#' mod_downloadable_data_table_ui("downloadable_data_table_1")
+#'
+#' To be copied in the server
+#' mod_downloadable_data_table_server("downloadable_data_table_1")'
 #'
 #' @description A shiny Module.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'
-#' @noRd
+#' @export
 #'
 #' @importFrom shiny NS tagList
 mod_downloadable_data_table_ui <- function(id){
@@ -20,9 +25,15 @@ mod_downloadable_data_table_ui <- function(id){
 
 #' downloadable_data_table Server Functions
 #'
-#' @noRd
+#' To be copied in the UI
+#' mod_downloadable_data_table_ui("downloadable_data_table_1")
+#'
+#' To be copied in the server
+#' mod_downloadable_data_table_server("downloadable_data_table_1")
+#'
+#' @export
 mod_downloadable_data_table_server <- function(id,
-                                               df=entity_time_metric_categories_df,
+                                               df=utShinyMods::entity_time_metric_categories_df,
                                                module_title="Title of Module",
                                                module_sub_title="Subtitle of module"){
   moduleServer( id, function(input, output, session){
@@ -68,8 +79,3 @@ mod_downloadable_data_table_server <- function(id,
 
 }
 
-## To be copied in the UI
-# mod_downloadable_data_table_ui("downloadable_data_table_1")
-
-## To be copied in the server
-# mod_downloadable_data_table_server("downloadable_data_table_1")

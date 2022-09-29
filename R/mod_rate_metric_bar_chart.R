@@ -2,9 +2,15 @@
 #'
 #' @description A shiny Module.
 #'
+#' To be copied in the UI
+#' mod_rate_metric_bar_chart_ui("rate_metric_bar_chart_1")
+#'
+#' To be copied in the server
+#' mod_rate_metric_bar_chart_server("rate_metric_bar_chart_1")
+#'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'
-#' @noRd
+#' @export
 #'
 #' @importFrom shiny NS tagList
 mod_rate_metric_bar_chart_ui <- function(id){
@@ -20,10 +26,16 @@ mod_rate_metric_bar_chart_ui <- function(id){
 }
 
 #' rate_metric_bar_chart Server Functions
+#
+#' To be copied in the UI
+#' mod_rate_metric_bar_chart_ui("rate_metric_bar_chart_1")
 #'
-#' @noRd
+#' To be copied in the server
+#' mod_rate_metric_bar_chart_server("rate_metric_bar_chart_1")
+#'
+#' @export
 mod_rate_metric_bar_chart_server <- function(id,
-                                            df=entity_time_metric_categories_df,
+                                            df=utShinyMods::entity_time_metric_categories_df,
                                             time_col=c("Time"="time_column"),
                                             rate_metric_uniqueness_col=c("Entity"="entity_id"),
                                             rate_metric_criteria_col=c("Outcome"="entity_outcome"),
@@ -106,9 +118,3 @@ mod_rate_metric_bar_chart_server <- function(id,
 
   })
 }
-
-## To be copied in the UI
-# mod_rate_metric_bar_chart_ui("rate_metric_bar_chart_1")
-
-## To be copied in the server
-# mod_rate_metric_bar_chart_server("rate_metric_bar_chart_1")
