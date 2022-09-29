@@ -29,6 +29,8 @@ golem::add_module(name = "summarized_data_table",
                   with_test = TRUE) # Interactive data table, summarized version
 golem::add_module(name = "downloadable_data_table",
                   with_test = TRUE) # Interactive data table, downloadable version
+golem::add_module(name = "help",
+                  with_test = TRUE) # help module
 
 ## Add internal datasets ----
 ## If you have data in your package
@@ -45,17 +47,19 @@ devtools::install_github("dsu-effectiveness/utHelpR")
 
 usethis::use_dev_package("utHelpR")
 
+
+## Add helper functions ----
+## Creates fct_* and utils_*
+golem::add_utils("style", with_test = TRUE)
+#golem::add_fct("helpers", with_test = TRUE)
+#golem::add_utils("helpers", with_test = TRUE)
+
+
 ## Continuation of DEV ####
 ## this is where the project currently is in development,
 ## any code after this has not been ran.
 ## The decision to use (or not use) the dev code below is up to the developer,
 ## and should be well documented here.
-
-
-## Add helper functions ----
-## Creates fct_* and utils_*
-golem::add_fct("helpers", with_test = TRUE)
-golem::add_utils("helpers", with_test = TRUE)
 
 ## External resources
 ## Creates .js and .css files at inst/app/www
@@ -71,7 +75,7 @@ usethis::use_test("app")
 # Documentation
 
 ## Vignette ----
-usethis::use_vignette("NCAA")
+usethis::use_vignette("utShinyMods")
 devtools::build_vignettes()
 
 ## Code Coverage----

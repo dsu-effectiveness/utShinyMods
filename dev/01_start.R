@@ -19,13 +19,13 @@
 ## to change the name in the app_sys() function in app_config.R /!\
 ##
 golem::fill_desc(
-  pkg_name = "NCAA", # The Name of the package containing the App
-  pkg_title = "NCAA Reports", # The Title of the package containing the App
-  pkg_description = "A {golem} based Shiny app package, designed to meet all NCAA reporting needs.", # The Description of the package containing the App
+  pkg_name = "utShinyMods", # The Name of the package containing the App
+  pkg_title = "utShinyMods Reports", # The Title of the package containing the App
+  pkg_description = "A {golem} based Shiny app package, designed to meet all utShinyMods reporting needs.", # The Description of the package containing the App
   author_first_name = "LaVoy", # Your First Name
   author_last_name = "", # Your Last Name
   author_email = "brentenlavoy@gmail.com", # Your Email
-  repo_url = "https://github.com/dsu-effectiveness/NCAA" # The URL of the GitHub Repo (optional)
+  repo_url = "https://github.com/dsu-effectiveness/utShinyMods" # The URL of the GitHub Repo (optional)
 )
 
 ## Set {golem} options ----

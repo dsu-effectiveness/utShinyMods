@@ -12,7 +12,7 @@ entity_time_metric_categories_df <- data.frame(
     entity_category_2 = sample(categories_2, 1000, replace=TRUE),
     entity_category_3 = sample(1:12, 1000, replace=TRUE),
     entity_outcome = sample(c(TRUE, FALSE), 1000, replace=TRUE),
-    all="All"
+    population="All"
 )
 
 usethis::use_data(entity_time_metric_categories_df, overwrite = TRUE)

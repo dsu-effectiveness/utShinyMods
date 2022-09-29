@@ -9,8 +9,8 @@ SELECT
     SUBSTR(b.middle_name, 1, 1) AS student_athlete_middle_initial,
 -- Student Athlete School ID Number
     b.student_id AS student_athlete_school_id_number,
--- NCAA ID
-    b.ncaa_id AS ncaa_id,
+-- utShinyMods ID
+    b.utShinyMods_id AS utShinyMods_id,
 -- Student Athlete Gender
     b.gender_code AS student_athlete_gender,
 -- Student Athlete Ethnicity
@@ -70,7 +70,7 @@ SELECT
     END AS this_term_code,
 -- Met Cohort Definition
     -- TODO: what does this mean? Translates to boolean of in a team and received athletic aid.
-    -- This is on a team and received athletic aid and the NCAA coordinator will change this if it needs to be changed
+    -- This is on a team and received athletic aid and the utShinyMods coordinator will change this if it needs to be changed
 -- Hours Attempted
     a.institutional_attempted_credits AS hours_attempted,
 -- Hours Earned
@@ -82,7 +82,7 @@ SELECT
 -- Cumulative GPA
     a.overall_cumulative_gpa AS cumulative_gpa,
 -- Sport Code
-    -- Conversion of stored sport code to NCAA equivalent sport code.
+    -- Conversion of stored sport code to utShinyMods equivalent sport code.
     CASE
         WHEN a.athlete_activity_code = 'BBL' THEN 'MBA'
         WHEN a.athlete_activity_code = 'FTB' THEN 'MFB'

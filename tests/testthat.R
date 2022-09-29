@@ -1,4 +1,4 @@
 library(testthat)
-library(NCAA)
+library(utShinyMods)
 
-test_check("NCAA")
+test_check("utShinyMods")
