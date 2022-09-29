@@ -98,3 +98,47 @@ generate_line_chart <- function(df, x, y, x_label, y_label, x_angle=45, y_format
 
     return( plot )
 }
+
+
+#' Create conditional filter input
+#'
+#' Create conditional panel containing pickerInput
+#' created by `conditional_filter_input()`.
+#' This function is used in the UI (contains `shiny::uiOutput`)
+#' @param col_name Which column to create filter for
+#' @param session Shiny session
+#'
+#' @export
+conditional_filter_panel <- function(col_name, panel_name, session) {
+    ns <- session$ns
+    shiny::conditionalPanel(
+        condition = glue::glue("input.{panel_name}.includes('{col_name}')"),
+        shiny::uiOutput(ns(glue::glue("{col_name}_panel"))),
+        ns = ns
+    )
+}
+
+#' Create conditional filter input
+#'
+#' Create pickerInput to be used in
+#' conditional panel created by `conditional_filter_panel()`
+#' This function is used in the server (contains `shiny::renderUI`)
+#' @param df A dataframe like object.
+#' @param col_name Which column, contained in df, to create filter for.
+#' @param input_label Label for pickerInput
+#' @param session Shiny session
+#'
+#' @export
+conditional_filter_input <- function(df, col_name, input_label, session) {
+    ns <- session$ns
+    shiny::renderUI({
+        shinyWidgets::pickerInput(
+            ns(glue::glue("{col_name}_filter")),
+            label = glue::glue("{input_label} Filter"),
+            choices = unique(df[[col_name]]),
+            selected = unique(df[[col_name]]),
+            multiple = TRUE,
+            options = list(`actions-box` = TRUE)
+        )
+    })
+}

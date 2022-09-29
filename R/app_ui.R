@@ -5,36 +5,17 @@
 #' @import shiny
 #' @noRd
 app_ui <- function(request) {
-  litera <- bslib::bs_theme(bootswatch = "litera",
-                            bg = "#FFFFFF", fg = "#000",
-                            primary = "#B5302A",
-                            base_font = bslib::font_google("Source Serif Pro"),
-                            heading_font = bslib::font_google("Josefin Sans", wght = 100))
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
     navbarPage(
-      theme = litera,
-      title = div(style = 'text-align: justify; width:150;',
-                  tags$img(style = 'display: block;
-                                    margin-left:-20px;
-                                    margin-top:-10px;
-                                    margin-bottom:-20px',
-                            src = "www/ie_logo.png",
-                            width="170",
-                            height="50",
-                            alt="UT Data"
-                    )),
-      tabPanel("Student Athletes", mod_summarized_data_table_ui("athletes_summary_data_table")),
-      tabPanel("Final Grades", mod_summarized_data_table_ui("final_grades_data_table")),
+      theme = get_theme(),
+      title = get_title_logo(),
       tabPanel("Teams", mod_summarized_data_table_ui("teams_data_table")),
+      tabPanel("Academic Portal Report", mod_downloadable_data_table_ui("academic_portal_upload_report_downloadable_data_table")),
       tabPanel("Fall to Spring Retention", mod_rate_metric_bar_chart_ui("fall_to_spring_retention_rate_metric_bar_chart")),
-      tabPanel("Fall to Fall Retention", mod_rate_metric_bar_chart_ui("fall_to_fall_retention_rate_metric_bar_chart")),
-      tabPanel("Trending GPA", mod_over_time_line_chart_ui("gpa_over_time_line_chart")),
-      tabPanel("Trending Credits Earned", mod_over_time_line_chart_ui("credits_earned_over_time_line_chart")),
-      tabPanel("Academic Portal Report", mod_downloadable_data_table_ui("academic_portal_upload_report_downloadable_data_table"))
-
+      tabPanel("Trending GPA", mod_over_time_line_chart_ui("gpa_over_time_line_chart"))
     )
   )
 }
@@ -57,7 +38,7 @@ golem_add_external_resources <- function() {
     favicon(),
     bundle_resources(
       path = app_sys("app/www"),
-      app_title = "NCAA"
+      app_title = "utShinyMods"
     ),
     # Add here other external resources
     # for example, you can add shinyalert::useShinyalert()
