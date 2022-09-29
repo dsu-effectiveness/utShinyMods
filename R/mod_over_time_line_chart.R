@@ -1,12 +1,12 @@
 #' over_time_line_chart UI Function
 #'
-#' @description A shiny Module.
-#'
 #' To be copied in the UI
 #' mod_over_time_line_chart_ui("over_time_line_chart_1")
 #'
 #' To be copied in the server
 #' mod_over_time_line_chart_server("over_time_line_chart_1")'
+#'
+#' @description A shiny Module.
 #'
 #' @param id A unique identifier, linking the UI to the Server
 #'
@@ -33,9 +33,14 @@ mod_over_time_line_chart_ui <- function(id){
 #' To be copied in the server
 #' mod_over_time_line_chart_server("over_time_line_chart_1")'
 #'
+#' Justification for using extra parameters in the Server function, can be found in the following documentation:
+#' https://shiny.rstudio.com/articles/modules.html
+#' Quote from documentation:
+#' "You can define the function so that it takes any number of additional parameters, including ..., so that whoever uses the module can customize what the module does."
+#'
 #' @param id A unique identifier, linking the UI to the Server
 #' @param input,output,session Internal parameters for {shiny}.
-#' @param df
+#' @param df A data frame.
 #' @param time_col
 #' @param metric_col
 #' @param metric_summarization_function
@@ -43,11 +48,6 @@ mod_over_time_line_chart_ui <- function(id){
 #' @param filter_cols
 #' @param chart_title
 #' @param chart_sub_title
-#'
-#' Justification for using extra parameters in the Server function, can be found in the following documentation:
-#' https://shiny.rstudio.com/articles/modules.html
-#' Quote from documentation:
-#' "You can define the function so that it takes any number of additional parameters, including ..., so that whoever uses the module can customize what the module does."
 #'
 #' @importFrom magrittr %>%
 #'

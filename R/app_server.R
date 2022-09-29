@@ -17,17 +17,20 @@ app_server <- function(input, output, session) {
     color="#c2c5c8"
   )
 
-  # Teams Module ####
-  mod_summarized_data_table_server("teams_data_table")
+  # Sunburst Module ####
+  mod_sunburst_diagram_server("sunburst_diagram_example")
 
-  # Academic Portal Report Module ####
-  mod_downloadable_data_table_server("academic_portal_upload_report_downloadable_data_table")
+  # Summarized Data Table Module ####
+  mod_summarized_data_table_server("summarized_data_table_example")
 
-  # Fall to Spring Retention Module ####
-  mod_rate_metric_bar_chart_server("fall_to_spring_retention_rate_metric_bar_chart")
+  # Downloadable Data Table Module ####
+  mod_downloadable_data_table_server("downloadable_data_table_example")
 
-  # Trending GPA Module ####
-  mod_over_time_line_chart_server("gpa_over_time_line_chart")
+  # Rate Metric Bar Char Module ####
+  mod_rate_metric_bar_chart_server("rate_metric_bar_chart_example")
+
+  # Over Time Line Char Module ####
+  mod_over_time_line_chart_server("over_time_line_chart_example")
 
 
   waiter::waiter_hide() # hide the waiter

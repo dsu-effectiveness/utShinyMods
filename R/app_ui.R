@@ -12,10 +12,11 @@ app_ui <- function(request) {
     navbarPage(
       theme = get_theme(),
       title = get_title_logo(),
-      tabPanel("Teams", mod_summarized_data_table_ui("teams_data_table")),
-      tabPanel("Academic Portal Report", mod_downloadable_data_table_ui("academic_portal_upload_report_downloadable_data_table")),
-      tabPanel("Fall to Spring Retention", mod_rate_metric_bar_chart_ui("fall_to_spring_retention_rate_metric_bar_chart")),
-      tabPanel("Trending GPA", mod_over_time_line_chart_ui("gpa_over_time_line_chart"))
+      tabPanel("Sunburst", mod_sunburst_diagram_ui("sunburst_diagram_example")),
+      tabPanel("Summarized Data Table", mod_summarized_data_table_ui("summarized_data_table_example")),
+      tabPanel("Downloadable Data Table", mod_downloadable_data_table_ui("downloadable_data_table_example")),
+      tabPanel("Rate Metric Bar Chart", mod_rate_metric_bar_chart_ui("rate_metric_bar_chart_example")),
+      tabPanel("Over Time Line Chart", mod_over_time_line_chart_ui("over_time_line_chart_example"))
     )
   )
 }

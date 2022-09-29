@@ -1,12 +1,13 @@
 #' rate_metric_bar_chart UI Function
 #'
-#' @description A shiny Module.
 #'
 #' To be copied in the UI
 #' mod_rate_metric_bar_chart_ui("rate_metric_bar_chart_1")
 #'
 #' To be copied in the server
 #' mod_rate_metric_bar_chart_server("rate_metric_bar_chart_1")
+#'
+#' @description A shiny Module.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'

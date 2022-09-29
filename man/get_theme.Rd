@@ -2,13 +2,10 @@
 % Please edit documentation in R/utils_style.R
 \name{get_theme}
 \alias{get_theme}
-\title{Title}
+\title{Get Theme}
 \usage{
 get_theme()
 }
 \description{
-Create title logo
-}
-\details{
-Returns UT logo with correct dimensions for app title.
+A custom theme.
 }
