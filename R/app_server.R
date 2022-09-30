@@ -16,6 +16,9 @@ app_server <- function(input, output, session) {
                              shiny::p("Waiting for brilliance...")))
   )
 
+  # Sankey Module ####
+  mod_sankey_diagram_server("sankey_diagram_example")
+
   # Over Time Line Chart Term Module ####
   mod_over_time_line_chart_server( "over_time_line_chart_term_example" )
 

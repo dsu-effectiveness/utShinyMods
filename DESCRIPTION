@@ -12,16 +12,19 @@ Depends:
     R (>= 2.10)
 Imports: 
     bslib,
+    cli,
     config (>= 0.3.1),
     dplyr,
     DT,
     ggplot2,
     glue,
     golem (>= 0.3.2),
+    htmlwidgets,
     janitor,
     magrittr,
     ngram,
     plotly,
+    purrr,
     reactable,
     readr,
     rlang,
@@ -30,12 +33,14 @@ Imports:
     shinyWidgets,
     stringr,
     tidyr,
+    utVizSankey (>= 0.3.2),
     utVizSunburst (>= 0.4.1),
     waiter,
     writexl
 Suggests: 
     testthat (>= 3.0.0)
 Remotes: 
+    dsu-effectiveness/utVizSankey,
     dsu-effectiveness/utVizSunburst
 Config/testthat/edition: 3
 Encoding: UTF-8

@@ -33,6 +33,8 @@ golem::add_module(name = "help",
                   with_test = TRUE) # help module
 golem::add_module(name = "sunburst_diagram",
                   with_test = TRUE) # Sunburst diagram
+golem::add_module(name = "sankey_diagram",
+                  with_test = TRUE) # Sankey diagram
 
 ## Add internal datasets ----
 ## If you have data in your package
@@ -48,6 +50,10 @@ usethis::use_data_raw(name = "entity_time_metric_categories_df", open = FALSE)
 devtools::install_github("dsu-effectiveness/utVizSunburst")
 
 usethis::use_dev_package("utVizSunburst")
+
+devtools::install_github("dsu-effectiveness/utVizSankey")
+
+usethis::use_dev_package("utVizSankey")
 
 
 ## Add helper functions ----
