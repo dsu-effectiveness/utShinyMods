@@ -1,9 +1,9 @@
 
 #' Get Title Logo
 #'
-#' Returns UT logo with correct dimensions for app title.
+#' @param right_aligned_title
 #'
-#' @return
+#' @return Returns UT logo with correct dimensions for app title.
 #' @export
 #'
 #' @examples

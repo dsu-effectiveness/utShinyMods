@@ -6,6 +6,12 @@
 \usage{
 get_title_logo(right_aligned_title = "Shiny Dashboard")
 }
-\description{
+\arguments{
+\item{right_aligned_title}{}
+}
+\value{
 Returns UT logo with correct dimensions for app title.
+}
+\description{
+Get Title Logo
 }
