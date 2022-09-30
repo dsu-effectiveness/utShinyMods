@@ -54,7 +54,7 @@ mod_over_time_line_chart_ui <- function(id){
 #' @export
 mod_over_time_line_chart_server <- function(id,
                                             df=utShinyMods::entity_time_metric_categories_df,
-                                            time_col=c("Time"="time_column"),
+                                            time_col=c("Time"="time_column_2"),
                                             metric_col=c("Metric"="metric_column"),
                                             metric_summarization_function=sum,
                                             grouping_cols=c("Category 1"="entity_category_1",

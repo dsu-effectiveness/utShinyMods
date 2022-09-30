@@ -10,6 +10,7 @@ generate_line_chart(
   y,
   x_label,
   y_label,
+  x_is_continuous = TRUE,
   x_angle = 45,
   x_format = function(x) {
      x

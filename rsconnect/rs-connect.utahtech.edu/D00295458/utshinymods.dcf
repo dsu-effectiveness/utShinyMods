@@ -1,0 +1,14 @@
+name: utshinymods
+title: utShinyMods
+username: D00295458
+account: D00295458
+server: rs-connect.utahtech.edu
+hostUrl: https://rs-connect.utahtech.edu/__api__
+appId: 132
+bundleId: 5628
+url: https://rs-connect.utahtech.edu/content/132/
+when: 1664566168.04918
+lastSyncTime: 1664566168.04918
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: dev/01_start.R|dev/02_dev.R|dev/03_deploy.R|dev/run_dev.R|sandbox

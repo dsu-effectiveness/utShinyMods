@@ -12,13 +12,13 @@ app_ui <- function(request) {
     navbarPage(
       theme = get_theme(),
       title = get_title_logo(),
-      tabPanel("Sankey", mod_sankey_diagram_ui("sankey_diagram_example")),
       tabPanel("Over Time Line Chart - Term", mod_over_time_line_chart_ui("over_time_line_chart_term_example")),
       tabPanel("Over Time Line Chart - Days", mod_over_time_line_chart_ui("over_time_line_chart_days_example")),
       tabPanel("Rate Metric Bar Chart", mod_rate_metric_bar_chart_ui("rate_metric_bar_chart_example")),
       tabPanel("Sunburst", mod_sunburst_diagram_ui("sunburst_diagram_example")),
       tabPanel("Summarized Data Table", mod_summarized_data_table_ui("summarized_data_table_example")),
-      tabPanel("Downloadable Data Table", mod_downloadable_data_table_ui("downloadable_data_table_example"))
+      tabPanel("Downloadable Data Table", mod_downloadable_data_table_ui("downloadable_data_table_example")),
+      tabPanel("Sankey - In Development", mod_sankey_diagram_ui("sankey_diagram_example")),
     )
   )
 }
