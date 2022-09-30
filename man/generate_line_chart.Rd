@@ -11,10 +11,10 @@ generate_line_chart(
   x_label,
   y_label,
   x_angle = 45,
-  y_format = function(x) {
+  x_format = function(x) {
      x
  },
-  x_format = function(x) {
+  y_format = function(x) {
      x
  },
   grouping = 0,

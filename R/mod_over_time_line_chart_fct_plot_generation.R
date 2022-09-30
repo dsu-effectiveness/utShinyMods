@@ -21,11 +21,18 @@
 #' @export
 #'
 #' @examples
-generate_line_chart <- function(df, x, y, x_label, y_label,
+generate_line_chart <- function(df,
+                                x,
+                                y,
+                                x_label,
+                                y_label,
                                 x_angle=45,
-                                y_format=function(x){x}, x_format=function(x){x},
-                                grouping=0, group_labeling="",
-                                legend_title='', legend_position="right",
+                                x_format=function(x){x},
+                                y_format=function(x){x},
+                                grouping=0,
+                                group_labeling="",
+                                legend_title='',
+                                legend_position="right",
                                 lin_reg=FALSE) {
     brookes_blues <- c(
         "#003058",
@@ -59,7 +66,7 @@ generate_line_chart <- function(df, x, y, x_label, y_label,
     color_palette <- c(color_palette, color_palette)
     color_palette <- c(color_palette, color_palette)
 
-    ggplot_object <- ggplot2::ggplot(df, ggplot2::aes(x=as.factor({{x}}),
+    ggplot_object <- ggplot2::ggplot(df, ggplot2::aes(x=as.factor( {{x}} ),
                                                       y={{y}},
                                                       group=as.factor({{grouping}}),
                                                       color=as.factor({{grouping}}),
@@ -67,16 +74,16 @@ generate_line_chart <- function(df, x, y, x_label, y_label,
                                                                  paste(y_label, ": ", sep=''), y_format({{y}}), "<br />",
                                                                  {{group_labeling}},
                                                                  sep='') ) ) +
-        ggplot2::geom_line() +
-        ggplot2::geom_point(alpha=.8) +
+        ggplot2::geom_line( size=.5 ) +
+        ggplot2::geom_point( alpha=.8, size=.5 ) +
         ggplot2::scale_color_manual( values=color_palette ) +
-        ggplot2::scale_y_continuous(y_label, labels=y_format ) +
-        ggplot2::scale_x_discrete(x_label, labels=x_format ) +
+        ggplot2::scale_y_continuous( y_label, labels=y_format ) +
+        ggplot2::scale_x_discrete( x_label, labels=x_format ) +
         ggplot2::guides( color=ggplot2::guide_legend( title=legend_title ) ) +
         ggplot2::theme_minimal() +
-        ggplot2::theme(panel.grid.minor.x = ggplot2::element_blank(),
-                       panel.grid.minor.y = ggplot2::element_blank(),
-                       legend.position=legend_position)
+        ggplot2::theme( panel.grid.minor.x = ggplot2::element_blank(),
+                        panel.grid.minor.y = ggplot2::element_blank(),
+                        legend.position=legend_position )
 
     if (lin_reg) {
         ggplot_object <-ggplot_object +
