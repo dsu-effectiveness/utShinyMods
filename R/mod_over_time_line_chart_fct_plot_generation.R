@@ -26,6 +26,7 @@ generate_line_chart <- function(df,
                                 y,
                                 x_label,
                                 y_label,
+                                x_is_continuous=TRUE,
                                 x_angle=45,
                                 x_format=function(x){x},
                                 y_format=function(x){x},
@@ -66,7 +67,13 @@ generate_line_chart <- function(df,
     color_palette <- c(color_palette, color_palette)
     color_palette <- c(color_palette, color_palette)
 
-    ggplot_object <- ggplot2::ggplot(df, ggplot2::aes(x=as.factor( {{x}} ),
+    if (x_is_continuous) {
+        x_scale <- ggplot2::scale_x_continuous( x_label, labels=x_format )
+    } else {
+        x_scale <- ggplot2::scale_x_discrete( x_label, labels=x_format )
+    }
+
+    ggplot_object <- ggplot2::ggplot(df, ggplot2::aes(x={{x}},
                                                       y={{y}},
                                                       group=as.factor({{grouping}}),
                                                       color=as.factor({{grouping}}),
@@ -78,7 +85,7 @@ generate_line_chart <- function(df,
         ggplot2::geom_point( alpha=.8, size=.5 ) +
         ggplot2::scale_color_manual( values=color_palette ) +
         ggplot2::scale_y_continuous( y_label, labels=y_format ) +
-        ggplot2::scale_x_discrete( x_label, labels=x_format ) +
+        x_scale +
         ggplot2::guides( color=ggplot2::guide_legend( title=legend_title ) ) +
         ggplot2::theme_minimal() +
         ggplot2::theme( panel.grid.minor.x = ggplot2::element_blank(),
