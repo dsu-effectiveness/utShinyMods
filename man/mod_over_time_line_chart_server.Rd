@@ -7,7 +7,7 @@
 mod_over_time_line_chart_server(
   id,
   df = utShinyMods::entity_time_metric_categories_df,
-  time_col = c(Time = "time_column_2"),
+  time_col = c(Time = "time_column"),
   metric_col = c(Metric = "metric_column"),
   metric_summarization_function = sum,
   grouping_cols = c(`Category 1` = "entity_category_1", `Category 2` =
