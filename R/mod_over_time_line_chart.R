@@ -54,7 +54,7 @@ mod_over_time_line_chart_ui <- function(id){
 #' @export
 mod_over_time_line_chart_server <- function(id,
                                             df=utShinyMods::entity_time_metric_categories_df,
-                                            time_col=c("Time"="time_column_2"),
+                                            time_col=c("Time"="time_column"),
                                             metric_col=c("Metric"="metric_column"),
                                             metric_summarization_function=sum,
                                             grouping_cols=c("Category 1"="entity_category_1",
@@ -128,11 +128,20 @@ mod_over_time_line_chart_server <- function(id,
     # Plot Rendering ####
     output$over_time_line_chart <- plotly::renderPlotly({
 
-        group_label <- ngram::concatenate( names(grouping_cols)[grouping_cols %in% input$grouping_selection], collapse=' | ' )
-        # custom function dependency
-        generate_line_chart(reactive_over_time_plot_df(),
+        reactive_plot_df <- reactive_over_time_plot_df()
+
+        x_is_continuous <- !is.character( reactive_plot_df[['x_plot']] )
+        if (!x_is_continuous) {
+          reactive_plot_df[['x_plot']] <- as.factor(reactive_plot_df[['x_plot']])
+        }
+
+        group_label <- ngram::concatenate( names(grouping_cols)[grouping_cols %in% input$grouping_selection],
+                                           collapse=' | ' )
+
+        generate_line_chart(reactive_plot_df,
                             x=x_plot,
                             y=y_plot,
+                            x_is_continuous=x_is_continuous,
                             grouping=grouping,
                             x_label=names(time_col),
                             y_label=names(metric_col),
