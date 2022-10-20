@@ -6,13 +6,12 @@
 #' @param y
 #' @param x_label
 #' @param y_label
+#' @param x_is_continuous
 #' @param x_angle
-#' @param y_format
 #' @param x_format
+#' @param y_format
 #' @param grouping
 #' @param group_labeling
-#' @param title
-#' @param sub_title
 #' @param legend_title
 #' @param legend_position
 #' @param lin_reg
@@ -35,37 +34,6 @@ generate_line_chart <- function(df,
                                 legend_title='',
                                 legend_position="right",
                                 lin_reg=FALSE) {
-    brookes_blues <- c(
-        "#003058",
-        "#004782",
-        "#005eac",
-        "#0075d7",
-        "#028cff",
-        "#2c9fff"
-    )
-
-    rock_reds <- c(
-        "#BA1C21",
-        "#95161A",
-        "#771215",
-        "#5F0E11",
-        "#4C0B0E",
-        "#3D090B"
-    )
-
-    desert_sands <- c(
-        "#E6CCB3",
-        "#B8A38F",
-        "#938272",
-        "#76685B",
-        "#5E5349",
-        "#4B423A"
-    )
-
-    color_palette <- c( brookes_blues, rock_reds, desert_sands )
-    color_palette <- c(color_palette, color_palette)
-    color_palette <- c(color_palette, color_palette)
-    color_palette <- c(color_palette, color_palette)
 
     if (x_is_continuous) {
         x_scale <- ggplot2::scale_x_continuous( x_label, labels=x_format )
@@ -83,7 +51,7 @@ generate_line_chart <- function(df,
                                                                  sep='') ) ) +
         ggplot2::geom_line( size=.5 ) +
         ggplot2::geom_point( alpha=.8, size=.5 ) +
-        ggplot2::scale_color_manual( values=color_palette ) +
+        ggplot2::scale_color_manual( palette=ut_color_palette ) +
         ggplot2::scale_y_continuous( y_label, labels=y_format ) +
         x_scale +
         ggplot2::guides( color=ggplot2::guide_legend( title=legend_title ) ) +
