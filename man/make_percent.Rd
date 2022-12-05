@@ -7,8 +7,16 @@
 make_percent(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{Any real number.}
+}
+\value{
+Input formatted as if assumed to be a percentage, with a "%" sign appended.
 }
 \description{
 Make Percent
+}
+\examples{
+make_percent(.5)
+make_percent(1)
+make_percent(90)
 }

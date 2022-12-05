@@ -19,7 +19,30 @@ generate_grouped_bar_plot(
 )
 }
 \arguments{
-\item{plot_height}{}
+\item{df}{A data frame containing the data to be plotted.}
+
+\item{x}{A column name in `df` representing the x-axis variable in the plot.}
+
+\item{y}{A column name in `df` representing the y-axis variable in the plot.}
+
+\item{x_label}{A string representing the label for the x-axis.}
+
+\item{y_label}{A string representing the label for the y-axis.}
+
+\item{y_format}{A function that takes a numeric value and returns a string. This function is used to format the y-axis labels. Default value is make_percent, which converts numeric values to percentages.}
+
+\item{grouping}{A column name in df representing the variable to group by in the plot. Default value is "None", which means no grouping will be performed.}
+
+\item{group_labeling}{A string representing the label for the grouping variable. Default value is an empty string.}
+
+\item{legend_title}{A string representing the title of the legend. Default value is an empty string.}
+
+\item{legend_position}{A string representing the position of the legend in the plot. Default value is "right".}
+
+\item{plot_height}{A numeric value representing the height of the plot in pixels. Default value is `NULL`.}
+}
+\value{
+Returns a plotly object containing the bar plot, this chart can be further customized using plotly functions.
 }
 \description{
 Generate Grouped Bar Plot
