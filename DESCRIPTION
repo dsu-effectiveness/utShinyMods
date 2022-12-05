@@ -5,7 +5,7 @@ Authors@R:
     person("LaVoy", , , "brentenlavoy@gmail.com", role = c("cre", "aut"))
 Description: A {golem} based Shiny app package, designed to meet all
     utShinyMods reporting needs.
-License: CC BY 4.0
+License: MIT + file LICENSE
 URL: https://github.com/dsu-effectiveness/utShinyMods
 BugReports: https://github.com/dsu-effectiveness/utShinyMods/issues
 Depends: 

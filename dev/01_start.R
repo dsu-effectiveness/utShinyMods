@@ -33,13 +33,14 @@ golem::set_golem_options()
 
 ## Create Common Files ----
 ## See ?usethis for more information
-# usethis::use_mit_license("Golem User") # You can set another license here
+usethis::use_mit_license("Utah Tech University") # You can set another license here
 # Setting the license as CC-BY: Free to share and adapt, must give appropriate credit.
 # Rather than using the default MIT license.
-usethis::use_ccby_license()
+# usethis::use_ccby_license()
 
+# Choosing not to do this, and rather just fill out the README manually.
 ## use rmd to generate the README for the repo
-usethis::use_readme_rmd(open = FALSE)
+# usethis::use_readme_rmd(open = FALSE)
 # README.Rmd will need to be filled out and knit,
 # this will generate the README.md.
 
