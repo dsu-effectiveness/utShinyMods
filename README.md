@@ -32,7 +32,7 @@ utShinyMods::mod_over_time_line_chart_server("over_time_line_chart_1")
 
 You can customize the behavior and appearance of the module by passing additional arguments to the server function. For example, you can specify the data frame to use, the columns to use for the time and metric variables, and the function to use for summarizing the metric data. See the package documentation for a complete list of arguments and their default values.
 
-Here is simple, bare-bones example of a complete Shiny app that uses utShinyMods:
+Here is a simple, bare-bones example of a complete Shiny app that uses utShinyMods:
 
 
 ```r
@@ -53,7 +53,7 @@ shinyApp(ui, server)
 
 ## Contributing
 
-We welcome contributions to utShinyMods. If you have an idea for a new module or other improvement, please open an issue on the GitHub repository to discuss it before submitting a pull request. Please follow the <a href="https://style.tidyverse.org/" target="_new">tidyverse style guide</a> for your code and include comprehensive tests and documentation for your changes. **The best place to start contributing is to become familiar with the contents of the dev folder in the code base.**
+We welcome contributions to utShinyMods. If you have an idea for a new module or other improvement, please open an issue on the GitHub repository to discuss it before submitting a pull request. Please follow the <a href="https://style.tidyverse.org/" target="_new">tidyverse style guide</a> and {golem} paradigm for your code and include comprehensive tests and documentation for your changes. **The best place to start contributing is to become familiar with the contents of the dev folder in the code base.**
 
 ## License
 
