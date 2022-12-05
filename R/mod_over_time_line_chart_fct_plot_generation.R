@@ -19,9 +19,8 @@
 #' @param lin_reg A boolean indicating whether to include a linear regression line on the plot. Defaults to FALSE.
 #'
 #' @return Returns a plotly object containing the line chart, this chart can be further customized using plotly functions.
-#' @export
 #'
-#' @examples
+#' @export
 generate_line_chart <- function(df,
                                 x,
                                 y,
@@ -81,6 +80,7 @@ generate_line_chart <- function(df,
 #' created by `conditional_filter_input()`.
 #' This function is used in the UI (contains `shiny::uiOutput`)
 #' @param col_name Which column to create filter for
+#' @param panel_name A string as the name of the panel.
 #' @param session Shiny session
 #'
 #' @export

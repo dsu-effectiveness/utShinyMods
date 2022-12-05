@@ -9,6 +9,8 @@ conditional_filter_panel(col_name, panel_name, session)
 \arguments{
 \item{col_name}{Which column to create filter for}
 
+\item{panel_name}{A string as the name of the panel.}
+
 \item{session}{Shiny session}
 }
 \description{

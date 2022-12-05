@@ -29,9 +29,8 @@ make_percent <- function(x) {
 #' @param plot_height A numeric value representing the height of the plot in pixels. Default value is `NULL`.
 #'
 #' @return Returns a plotly object containing the bar plot, this chart can be further customized using plotly functions.
-#' @export
 #'
-#' @examples
+#' @export
 generate_grouped_bar_plot <- function(df, x, y, x_label, y_label, y_format=make_percent,
                                       grouping="None", group_labeling="",
                                       legend_title='', legend_position="right",

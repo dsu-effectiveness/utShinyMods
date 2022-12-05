@@ -9,11 +9,11 @@ mod_sankey_diagram_server(
   df = utShinyMods::entity_time_metric_categories_df
 )
 }
-\description{
-To be copied in the UI
-mod_sankey_diagram_ui("sankey_diagram_1")
+\arguments{
+\item{id}{A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.}
+
+\item{df}{A data frame containing the data that will be used to create the Sankey diagram.}
 }
-\details{
-To be copied in the server
-mod_sankey_diagram_server("sankey_diagram_1")
+\description{
+This function provides the server-side logic for the `sankey_diagram` Shiny module. This function must be used in conjunction with the `mod_sankey_diagram_ui` function in order to create a complete Shiny module.
 }

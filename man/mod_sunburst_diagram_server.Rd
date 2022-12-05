@@ -2,7 +2,7 @@
 % Please edit documentation in R/mod_sunburst_diagram.R
 \name{mod_sunburst_diagram_server}
 \alias{mod_sunburst_diagram_server}
-\title{sunburst_diagram Server Functions}
+\title{sunburst_diagram Server Function}
 \usage{
 mod_sunburst_diagram_server(
   id,
@@ -13,11 +13,17 @@ mod_sunburst_diagram_server(
   module_sub_title = "Sub Title for module."
 )
 }
-\description{
-To be copied in the UI
-mod_sunburst_diagram_ui("sunburst_diagram_1")
+\arguments{
+\item{id}{A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.}
+
+\item{df}{The data frame that the module uses to create the sunburst diagram.}
+
+\item{step_cols}{A vector of column names in `df` that are used to define the levels of the sunburst diagram. Each column should contain categorical data, and the columns should be ordered such that the first column defines the innermost level of the diagram, the second column defines the next level, and so on.}
+
+\item{module_title}{A character string to be used as the title of the module.}
+
+\item{module_sub_title}{A character string to be used as the sub-title of the module.}
 }
-\details{
-To be copied in the server
-mod_sunburst_diagram_server("sunburst_diagram_1")
+\description{
+This function provides the server-side logic for the `sunburst_diagram` Shiny module. This function must be used in conjunction with the `mod_sunburst_diagram_ui` function in order to create a complete Shiny module.
 }

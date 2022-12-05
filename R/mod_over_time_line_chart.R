@@ -1,14 +1,8 @@
 #' over_time_line_chart UI Function
 #'
-#' To be copied in the UI
-#' mod_over_time_line_chart_ui("over_time_line_chart_1")
+#' This function creates the UI portion for the `over_time_line_chart` Shiny module. This function must be used in conjunction with the `mod_over_time_line_chart_server` function in order to create a complete Shiny module.
 #'
-#' To be copied in the server
-#' mod_over_time_line_chart_server("over_time_line_chart_1")'
-#'
-#' @description A shiny Module.
-#'
-#' @param id A unique identifier, linking the UI to the Server
+#' @param id A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.
 #'
 #' @importFrom shiny NS tagList
 #'
@@ -27,27 +21,17 @@ mod_over_time_line_chart_ui <- function(id){
 
 #' over_time_line_chart Server Functions
 #'
-#' To be copied in the UI
-#' mod_over_time_line_chart_ui("over_time_line_chart_1")
+#' This function provides the server-side logic for the `over_time_line_chart` Shiny module. This function must be used in conjunction with the `mod_over_time_line_chart_ui` function in order to create a complete Shiny module.
 #'
-#' To be copied in the server
-#' mod_over_time_line_chart_server("over_time_line_chart_1")'
-#'
-#' Justification for using extra parameters in the Server function, can be found in the following documentation:
-#' https://shiny.rstudio.com/articles/modules.html
-#' Quote from documentation:
-#' "You can define the function so that it takes any number of additional parameters, including ..., so that whoever uses the module can customize what the module does."
-#'
-#' @param id A unique identifier, linking the UI to the Server
-#' @param input,output,session Internal parameters for {shiny}.
-#' @param df A data frame.
-#' @param time_col
-#' @param metric_col
-#' @param metric_summarization_function
-#' @param grouping_cols
-#' @param filter_cols
-#' @param chart_title
-#' @param chart_sub_title
+#' @param id A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.
+#' @param df A data frame containing the data to be plotted. The data frame should contain columns for time data, metric data, and any categorical variables to be used for grouping or filtering.
+#' @param time_col The name of the column in `df` that contains time data.
+#' @param metric_col The name of the column in `df` that contains metric data. This column should contain numerical data.
+#' @param metric_summarization_function  A function for summarizing the metric data. This function should take a vector of numerical data as input and return a single numerical value. The default value is `sum`, which takes the sum of the metric data.
+#' @param grouping_cols A list of columns to group the data by. This should be a named list, with each element containing the name of a column in `df` to group by. The names of the list elements will be used as labels in the Shiny app's input controls.
+#' @param filter_cols A list of columns to use as filters for the data. This should be a named list, with each element containing the name of a column in `df` to filter by. The names of the list elements will be used as labels in the Shiny app's input controls.
+#' @param module_title A character string to be used as the title of the module.
+#' @param module_sub_title A character string to be used as the sub-title of the module.
 #'
 #' @importFrom magrittr %>%
 #'
@@ -112,6 +96,10 @@ mod_over_time_line_chart_server <- function(id,
     reactive_over_time_plot_df <- reactive({
         # Pause plot execution while input values evaluate. This eliminates an error message.
         req(input$grouping_selection)
+
+        # Bind variables to function
+        x_plot <- NULL
+        y_plot <- NULL
 
         plot_df <- df %>%
             tidyr::unite( grouping, input$grouping_selection, remove=FALSE, sep=' | ' ) %>%

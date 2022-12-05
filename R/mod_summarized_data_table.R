@@ -1,8 +1,8 @@
 #' summarized_data_table UI Function
 #'
-#' @description A shiny Module.
+#' This function creates the UI portion for the `summarized_data_table` Shiny module. This function must be used in conjunction with the `mod_summarized_data_table_server` function in order to create a complete Shiny module.
 #'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @param id A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.
 #'
 #' @export
 #'
@@ -16,13 +16,19 @@ mod_summarized_data_table_ui <- function(id){
   )
 }
 
-#' summarized_data_table Server Functions
+
+#' summarized_data_table Server Function
 #'
-#' To be copied in the UI
-#' mod_summarized_data_table_ui("summarized_data_table_1")
+#' This function provides the server-side logic for the `summarized_data_table` Shiny module. This function must be used in conjunction with the `mod_summarized_data_table_ui` function in order to create a complete Shiny module.
 #'
-#' To be copied in the server
-#' mod_summarized_data_table_server("summarized_data_table_1")
+#' @param id A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.
+#' @param df The data frame that the module will use to create the summary table.
+#' @param record_uniqueness_cols A vector of column names in `df` that will be used to uniquely identify each row in the summary table.
+#' @param filter_col A named vector of labels and column names that will be used to filter the data in the data frame. Currently only supports one filter.
+#' @param metric_columns A vector of column names in `df` that are summarized in the summary table. These columns should contain data that can be aggregated using the corresponding summarization function.
+#' @param metric_columns_summarization_functions A named vector of functions that are used to summarize the columns specified in metric_columns. This named vector should be in the form c("Display Name 1"=function_1, "Display Name 2"=function_2, ...), where the display names are the names that will be shown to the user in the Shiny app and the function names are the actual functions. These functions should take a vector of values as input and return a single numeric value that represents the aggregation of the input values.
+#' @param module_title A character string to be used as the title of the module.
+#' @param module_sub_title A character string to be used as the sub-title of the module.
 #'
 #' @export
 mod_summarized_data_table_server <- function(id,

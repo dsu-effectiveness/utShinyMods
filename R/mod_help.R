@@ -1,14 +1,8 @@
 #' help UI Function
 #'
-#' To be copied in the UI
-#' mod_help_ui("help_1")
+#' This function creates the UI portion for the `help` Shiny module. This function must be used in conjunction with the `mod_help_server` function in order to create a complete Shiny module.
 #'
-#' To be copied in the server
-#' mod_help_server("help_1")
-#'
-#' @description A shiny Module.
-#'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @param id A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.
 #'
 #' @export
 #'
@@ -22,15 +16,13 @@ mod_help_ui <- function(id){
 
 #' help Server Functions
 #'
-# To be copied in the UI
-#' mod_help_ui("help_1")
+#' This function provides the server-side logic for the `help` Shiny module. This function must be used in conjunction with the `mod_help_ui` function in order to create a complete Shiny module.
 #'
-#' To be copied in the server
-#' mod_help_server("help_1")'
+#' @param id A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.
 #'
 #' @export
 mod_help_server <- function(id){
-  moduleServer( id, function(input, output, session){
+  moduleServer(id, function(input, output, session){
     ns <- session$ns
 
   })

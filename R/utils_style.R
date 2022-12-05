@@ -1,12 +1,11 @@
 
 #' Get Title Logo
 #'
-#' @param right_aligned_title
+#' @param right_aligned_title A character string that specifies the text that will be used as the title of the app. This string will be displayed in the top right corner of the app.
 #'
 #' @return Returns UT logo with correct dimensions for app title.
-#' @export
 #'
-#' @examples
+#' @export
 get_title_logo <- function(right_aligned_title="Shiny Dashboard") {
     shiny::div(
         style = "text-align: justify; width:150;",
@@ -29,11 +28,9 @@ get_title_logo <- function(right_aligned_title="Shiny Dashboard") {
 #'
 #' A custom theme.
 #'
+#' @return A theme object that can be applied to a Shiny app.
 #'
-#' @return
 #' @export
-#'
-#' @examples
 get_theme <- function() {
     bslib::bs_theme(
         bootswatch = "litera",

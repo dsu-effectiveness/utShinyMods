@@ -7,7 +7,7 @@
 get_title_logo(right_aligned_title = "Shiny Dashboard")
 }
 \arguments{
-\item{right_aligned_title}{}
+\item{right_aligned_title}{A character string that specifies the text that will be used as the title of the app. This string will be displayed in the top right corner of the app.}
 }
 \value{
 Returns UT logo with correct dimensions for app title.

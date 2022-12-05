@@ -6,6 +6,9 @@
 \usage{
 get_theme()
 }
+\value{
+A theme object that can be applied to a Shiny app.
+}
 \description{
 A custom theme.
 }

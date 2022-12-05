@@ -2,7 +2,7 @@
 % Please edit documentation in R/mod_downloadable_data_table.R
 \name{mod_downloadable_data_table_server}
 \alias{mod_downloadable_data_table_server}
-\title{downloadable_data_table Server Functions}
+\title{downloadable_data_table Server Function}
 \usage{
 mod_downloadable_data_table_server(
   id,
@@ -11,11 +11,15 @@ mod_downloadable_data_table_server(
   module_sub_title = "Subtitle of module"
 )
 }
-\description{
-To be copied in the UI
-mod_downloadable_data_table_ui("downloadable_data_table_1")
+\arguments{
+\item{id}{A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.}
+
+\item{df}{The data frame containing the data to be displayed and available for download.}
+
+\item{module_title}{The character string to be used as the title of the Shiny module.}
+
+\item{module_sub_title}{The character string to be used as the subtitle of the Shiny module.}
 }
-\details{
-To be copied in the server
-mod_downloadable_data_table_server("downloadable_data_table_1")
+\description{
+This function provides the server-side logic for the `mod_downloadable_data_table` Shiny module. This function must be used in conjunction with the `mod_downloadable_data_table_ui` function in order to create a complete Shiny module.
 }

@@ -1,15 +1,8 @@
 #' rate_metric_bar_chart UI Function
 #'
+#' This function creates the UI portion for the `rate_metric_bar_chart` Shiny module. This function must be used in conjunction with the `mod_rate_metric_bar_chart_server` function in order to create a complete Shiny module.
 #'
-#' To be copied in the UI
-#' mod_rate_metric_bar_chart_ui("rate_metric_bar_chart_1")
-#'
-#' To be copied in the server
-#' mod_rate_metric_bar_chart_server("rate_metric_bar_chart_1")
-#'
-#' @description A shiny Module.
-#'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @param id A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.
 #'
 #' @export
 #'
@@ -27,12 +20,18 @@ mod_rate_metric_bar_chart_ui <- function(id){
 }
 
 #' rate_metric_bar_chart Server Functions
-#
-#' To be copied in the UI
-#' mod_rate_metric_bar_chart_ui("rate_metric_bar_chart_1")
 #'
-#' To be copied in the server
-#' mod_rate_metric_bar_chart_server("rate_metric_bar_chart_1")
+#' This function provides the server-side logic for the `rate_metric_bar_chart` Shiny module. This function must be used in conjunction with the `mod_rate_metric_bar_chart_ui` function in order to create a complete Shiny module.
+#'
+#' @param id A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.
+#' @param df A data frame containing the data to be plotted.
+#' @param time_col The name of the column in `df` that contains time data.
+#' @param rate_metric_uniqueness_col The name of the column in `df` that specifies the units for which the rate metric is calculated. For example, if the rate metric is the percentage of customers who purchased a product, this column could contain the customer ID, and each customer would be counted only once.
+#' @param rate_metric_criteria_col The name of the column in `df` that specifies the criteria for the rate metric. For example, if the rate metric is the percentage of customers who purchased a product, this column could contain a binary value indicating whether each customer purchased the product or not.
+#' @param rate_metric_desc A description of the rate metric. This will be used as the label for the y-axis of the bar chart.
+#' @param grouping_cols A named vector of columns in `df` as options to group the data by. This vector should be in the form c("Display Name 1"="column_name_1", "Display Name 2"="column_name_2", ...), where the display names are the names that will be shown to the user in the Shiny app and the column names are the actual names of the columns in the data frame.
+#' @param module_title A character string to be used as the title of the module.
+#' @param module_sub_title A character string to be used as the sub-title of the module.
 #'
 #' @export
 mod_rate_metric_bar_chart_server <- function(id,
@@ -81,6 +80,11 @@ mod_rate_metric_bar_chart_server <- function(id,
         # Pause plot execution while input values evaluate. This eliminates an error message.
         req(input$category_filter_selection)
         req(input$grouping_selection)
+
+        # Bind variables to function
+        rate_metric_numerator <- NULL
+        rate_metric_denominator <- NULL
+        rate_metric <- NULL
 
         plot_df <- df %>%
             dplyr::filter(  !!rlang::sym(input$grouping_selection) %in% input$category_filter_selection ) %>%

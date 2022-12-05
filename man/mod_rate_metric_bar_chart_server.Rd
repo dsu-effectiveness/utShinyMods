@@ -2,9 +2,7 @@
 % Please edit documentation in R/mod_rate_metric_bar_chart.R
 \name{mod_rate_metric_bar_chart_server}
 \alias{mod_rate_metric_bar_chart_server}
-\title{rate_metric_bar_chart Server Functions
-To be copied in the UI
-mod_rate_metric_bar_chart_ui("rate_metric_bar_chart_1")}
+\title{rate_metric_bar_chart Server Functions}
 \usage{
 mod_rate_metric_bar_chart_server(
   id,
@@ -19,7 +17,25 @@ mod_rate_metric_bar_chart_server(
   module_sub_title = "Sub Title for module."
 )
 }
+\arguments{
+\item{id}{A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.}
+
+\item{df}{A data frame containing the data to be plotted.}
+
+\item{time_col}{The name of the column in `df` that contains time data.}
+
+\item{rate_metric_uniqueness_col}{The name of the column in `df` that specifies the units for which the rate metric is calculated. For example, if the rate metric is the percentage of customers who purchased a product, this column could contain the customer ID, and each customer would be counted only once.}
+
+\item{rate_metric_criteria_col}{The name of the column in `df` that specifies the criteria for the rate metric. For example, if the rate metric is the percentage of customers who purchased a product, this column could contain a binary value indicating whether each customer purchased the product or not.}
+
+\item{rate_metric_desc}{A description of the rate metric. This will be used as the label for the y-axis of the bar chart.}
+
+\item{grouping_cols}{A named vector of columns in `df` as options to group the data by. This vector should be in the form c("Display Name 1"="column_name_1", "Display Name 2"="column_name_2", ...), where the display names are the names that will be shown to the user in the Shiny app and the column names are the actual names of the columns in the data frame.}
+
+\item{module_title}{A character string to be used as the title of the module.}
+
+\item{module_sub_title}{A character string to be used as the sub-title of the module.}
+}
 \description{
-To be copied in the server
-mod_rate_metric_bar_chart_server("rate_metric_bar_chart_1")
+This function provides the server-side logic for the `rate_metric_bar_chart` Shiny module. This function must be used in conjunction with the `mod_rate_metric_bar_chart_ui` function in order to create a complete Shiny module.
 }
