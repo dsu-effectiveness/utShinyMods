@@ -2,7 +2,7 @@
 % Please edit documentation in R/mod_summarized_data_table.R
 \name{mod_summarized_data_table_server}
 \alias{mod_summarized_data_table_server}
-\title{summarized_data_table Server Functions}
+\title{summarized_data_table Server Function}
 \usage{
 mod_summarized_data_table_server(
   id,
@@ -17,11 +17,23 @@ mod_summarized_data_table_server(
   module_sub_title = "Subtitle of module"
 )
 }
-\description{
-To be copied in the UI
-mod_summarized_data_table_ui("summarized_data_table_1")
+\arguments{
+\item{id}{A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.}
+
+\item{df}{The data frame that the module will use to create the summary table.}
+
+\item{record_uniqueness_cols}{A vector of column names in `df` that will be used to uniquely identify each row in the summary table.}
+
+\item{filter_col}{A named vector of labels and column names that will be used to filter the data in the data frame. Currently only supports one filter.}
+
+\item{metric_columns}{A vector of column names in `df` that are summarized in the summary table. These columns should contain data that can be aggregated using the corresponding summarization function.}
+
+\item{metric_columns_summarization_functions}{A named vector of functions that are used to summarize the columns specified in metric_columns. This named vector should be in the form c("Display Name 1"=function_1, "Display Name 2"=function_2, ...), where the display names are the names that will be shown to the user in the Shiny app and the function names are the actual functions. These functions should take a vector of values as input and return a single numeric value that represents the aggregation of the input values.}
+
+\item{module_title}{A character string to be used as the title of the module.}
+
+\item{module_sub_title}{A character string to be used as the sub-title of the module.}
 }
-\details{
-To be copied in the server
-mod_summarized_data_table_server("summarized_data_table_1")
+\description{
+This function provides the server-side logic for the `summarized_data_table` Shiny module. This function must be used in conjunction with the `mod_summarized_data_table_ui` function in order to create a complete Shiny module.
 }

@@ -1,18 +1,12 @@
 #' downloadable_data_table UI Function
 #'
-#' To be copied in the UI
-#' mod_downloadable_data_table_ui("downloadable_data_table_1")
+#' This function creates the UI portion for the `downloadable_data_table` Shiny module. This function must be used in conjunction with the `mod_downloadable_data_table_server` function in order to create a complete Shiny module.
 #'
-#' To be copied in the server
-#' mod_downloadable_data_table_server("downloadable_data_table_1")'
-#'
-#' @description A shiny Module.
-#'
-#' @param id,input,output,session Internal parameters for {shiny}.
-#'
-#' @export
+#' @param id A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.
 #'
 #' @importFrom shiny NS tagList
+#'
+#' @export
 mod_downloadable_data_table_ui <- function(id){
   ns <- NS(id)
   tagList(
@@ -20,17 +14,18 @@ mod_downloadable_data_table_ui <- function(id){
     tags$div( downloadButton( ns("report_download_csv"), "CSV" ),
               downloadButton( ns("report_download_excel"), "Excel" ),
               style="padding-bottom: 1em;"),
-    DT::dataTableOutput( ns('summary_table'), width=NULL )
+    DT::dataTableOutput( ns('downloadable_table'), width=NULL )
   )
 }
 
-#' downloadable_data_table Server Functions
+#' downloadable_data_table Server Function
 #'
-#' To be copied in the UI
-#' mod_downloadable_data_table_ui("downloadable_data_table_1")
+#' This function provides the server-side logic for the `mod_downloadable_data_table` Shiny module. This function must be used in conjunction with the `mod_downloadable_data_table_ui` function in order to create a complete Shiny module.
 #'
-#' To be copied in the server
-#' mod_downloadable_data_table_server("downloadable_data_table_1")
+#' @param id A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.
+#' @param df The data frame containing the data to be displayed and available for download.
+#' @param module_title The character string to be used as the title of the Shiny module.
+#' @param module_sub_title The character string to be used as the subtitle of the Shiny module.
 #'
 #' @export
 mod_downloadable_data_table_server <- function(id,
@@ -58,7 +53,7 @@ mod_downloadable_data_table_server <- function(id,
     })
 
     # Datatable Rendering ####
-    output$summary_table <- DT::renderDataTable(reactive_df(),
+    output$downloadable_table <- DT::renderDataTable(reactive_df(),
                                                 filter="top",
                                                 options=list( scrollX = TRUE,
                                                               lengthMenu=list( c(5, 10, 25, -1),

@@ -7,15 +7,8 @@
 mod_sunburst_diagram_ui(id)
 }
 \arguments{
-\item{id, input, output, session}{Internal parameters for {shiny}.}
+\item{id}{A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.}
 }
 \description{
-A shiny Module.
-}
-\details{
-To be copied in the UI
-mod_sunburst_diagram_ui("sunburst_diagram_1")
-
-To be copied in the server
-mod_sunburst_diagram_server("sunburst_diagram_1")
+This function creates the UI portion for the `sunburst_diagram` Shiny module. This function must be used in conjunction with the `mod_sunburst_diagram_server` function in order to create a complete Shiny module.
 }

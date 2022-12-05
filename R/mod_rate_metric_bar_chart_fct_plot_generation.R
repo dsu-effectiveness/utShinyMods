@@ -1,34 +1,36 @@
 
 #' Make Percent
 #'
-#' @param x
+#' @param x Any real number.
 #'
-#' @return
+#' @return Input formatted as if assumed to be a percentage, with a "%" sign appended.
 #' @export
 #'
 #' @examples
+#' make_percent(.5)
+#' make_percent(1)
+#' make_percent(90)
 make_percent <- function(x) {
     return( scales::percent(round(x, 3), drop0trailing=TRUE) )
 }
 
 #' Generate Grouped Bar Plot
 #'
-#' @param df
-#' @param x
-#' @param y
-#' @param x_label
-#' @param y_label
-#' @param y_format
-#' @param grouping
-#' @param group_labeling
-#' @param legend_title
-#' @param legend_position
-#' @param plot_height
+#' @param df A data frame containing the data to be plotted.
+#' @param x A column name in `df` representing the x-axis variable in the plot.
+#' @param y A column name in `df` representing the y-axis variable in the plot.
+#' @param x_label A string representing the label for the x-axis.
+#' @param y_label A string representing the label for the y-axis.
+#' @param y_format A function that takes a numeric value and returns a string. This function is used to format the y-axis labels. Default value is make_percent, which converts numeric values to percentages.
+#' @param grouping A column name in df representing the variable to group by in the plot. Default value is "None", which means no grouping will be performed.
+#' @param group_labeling A string representing the label for the grouping variable. Default value is an empty string.
+#' @param legend_title A string representing the title of the legend. Default value is an empty string.
+#' @param legend_position A string representing the position of the legend in the plot. Default value is "right".
+#' @param plot_height A numeric value representing the height of the plot in pixels. Default value is `NULL`.
 #'
-#' @return
+#' @return Returns a plotly object containing the bar plot, this chart can be further customized using plotly functions.
+#'
 #' @export
-#'
-#' @examples
 generate_grouped_bar_plot <- function(df, x, y, x_label, y_label, y_format=make_percent,
                                       grouping="None", group_labeling="",
                                       legend_title='', legend_position="right",

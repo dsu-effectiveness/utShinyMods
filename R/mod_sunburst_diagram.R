@@ -1,19 +1,12 @@
 #' sunburst_diagram UI Function
 #'
+#' This function creates the UI portion for the `sunburst_diagram` Shiny module. This function must be used in conjunction with the `mod_sunburst_diagram_server` function in order to create a complete Shiny module.
 #'
-#' To be copied in the UI
-#' mod_sunburst_diagram_ui("sunburst_diagram_1")
-#'
-#' To be copied in the server
-#' mod_sunburst_diagram_server("sunburst_diagram_1")
-#'
-#' @description A shiny Module.
-#'
-#' @param id,input,output,session Internal parameters for {shiny}.
-#'
-#' @export
+#' @param id A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.
 #'
 #' @importFrom shiny NS tagList
+#'
+#' @export
 mod_sunburst_diagram_ui <- function(id){
   ns <- NS(id)
   tagList(
@@ -27,13 +20,17 @@ mod_sunburst_diagram_ui <- function(id){
   )
 }
 
-#' sunburst_diagram Server Functions
+
+
+#' sunburst_diagram Server Function
 #'
-#' To be copied in the UI
-#' mod_sunburst_diagram_ui("sunburst_diagram_1")
+#' This function provides the server-side logic for the `sunburst_diagram` Shiny module. This function must be used in conjunction with the `mod_sunburst_diagram_ui` function in order to create a complete Shiny module.
 #'
-#' To be copied in the server
-#' mod_sunburst_diagram_server("sunburst_diagram_1")
+#' @param id A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.
+#' @param df The data frame that the module uses to create the sunburst diagram.
+#' @param step_cols A vector of column names in `df` that are used to define the levels of the sunburst diagram. Each column should contain categorical data, and the columns should be ordered such that the first column defines the innermost level of the diagram, the second column defines the next level, and so on.
+#' @param module_title A character string to be used as the title of the module.
+#' @param module_sub_title A character string to be used as the sub-title of the module.
 #'
 #' @export
 mod_sunburst_diagram_server <- function(id,

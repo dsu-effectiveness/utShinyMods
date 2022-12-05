@@ -7,15 +7,8 @@
 mod_help_ui(id)
 }
 \arguments{
-\item{id, input, output, session}{Internal parameters for {shiny}.}
+\item{id}{A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.}
 }
 \description{
-A shiny Module.
-}
-\details{
-To be copied in the UI
-mod_help_ui("help_1")
-
-To be copied in the server
-mod_help_server("help_1")
+This function creates the UI portion for the `help` Shiny module. This function must be used in conjunction with the `mod_help_server` function in order to create a complete Shiny module.
 }

@@ -1,25 +1,26 @@
 
 #' Generate Line Chart
 #'
-#' @param df
-#' @param x
-#' @param y
-#' @param x_label
-#' @param y_label
-#' @param x_is_continuous
-#' @param x_angle
-#' @param x_format
-#' @param y_format
-#' @param grouping
-#' @param group_labeling
-#' @param legend_title
-#' @param legend_position
-#' @param lin_reg
+#' The generate_line_chart function is used to create a line chart from a given data frame.
 #'
-#' @return
+#' @param df The data frame containing the data to be plotted.
+#' @param x The column name of the data frame containing the x-axis values.
+#' @param y The column name of the data frame containing the y-axis values.
+#' @param x_label The label to be used for the x-axis.
+#' @param y_label The label to be used for the y-axis.
+#' @param x_is_continuous A Boolean indicating whether the x-axis values are continuous or not. Defaults to TRUE.
+#' @param x_angle The angle, in degrees, at which to rotate the x-axis tick labels. Defaults to 45.
+#' @param x_format A function used to format the x-axis values. Defaults to the identity function (i.e. no formatting).
+#' @param y_format A function used to format the y-axis values. Defaults to the identity function (i.e. no formatting).
+#' @param grouping The column name of the data frame to use for grouping the data. Defaults to 0 (no grouping).
+#' @param group_labeling A string to be used as a label for the group. This is used in the tooltip for each data point. Defaults to the empty string.
+#' @param legend_title The title for the legend. Defaults to the empty string.
+#' @param legend_position The position of the legend on the plot. Defaults to "right".
+#' @param lin_reg A boolean indicating whether to include a linear regression line on the plot. Defaults to FALSE.
+#'
+#' @return Returns a plotly object containing the line chart, this chart can be further customized using plotly functions.
+#'
 #' @export
-#'
-#' @examples
 generate_line_chart <- function(df,
                                 x,
                                 y,
@@ -79,6 +80,7 @@ generate_line_chart <- function(df,
 #' created by `conditional_filter_input()`.
 #' This function is used in the UI (contains `shiny::uiOutput`)
 #' @param col_name Which column to create filter for
+#' @param panel_name A string as the name of the panel.
 #' @param session Shiny session
 #'
 #' @export

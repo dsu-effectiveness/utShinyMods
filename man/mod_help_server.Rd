@@ -6,10 +6,9 @@
 \usage{
 mod_help_server(id)
 }
-\description{
-mod_help_ui("help_1")
+\arguments{
+\item{id}{A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.}
 }
-\details{
-To be copied in the server
-mod_help_server("help_1")'
+\description{
+This function provides the server-side logic for the `help` Shiny module. This function must be used in conjunction with the `mod_help_ui` function in order to create a complete Shiny module.
 }

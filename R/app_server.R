@@ -38,6 +38,8 @@ app_server <- function(input, output, session) {
   # Downloadable Data Table Module ####
   mod_downloadable_data_table_server("downloadable_data_table_example")
 
+  # Help Module ####
+  mod_help_server("help_example")
 
 
   waiter::waiter_hide() # hide the waiter
