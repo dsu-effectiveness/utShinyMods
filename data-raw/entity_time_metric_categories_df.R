@@ -7,7 +7,7 @@ possible_colleges <- c( "College of Arts and Sciences", "College of Business", "
 possible_departments <- c( "Physics", "Mathematics", "Computer Science", "Biology", "Chemistry", "Economics", "History", "English", "Political Science" )
 possible_academic_programs <- c( "B.S. in Computer Science", "B.S. in Biology", "B.A. in English", "B.S. in Economics", "M.S. in Computer Science", "Ph.D. in Physics" )
 possible_genders <- c( "Male", "Female", "Non-binary", "Other" )
-possible_race_ethnicity <- c( "White", "Black", "Asian", "Native American", "Pacific Islander", "Latino" )
+possible_race_ethnicity <- c( "White", "Black", "Asian", "Native American", "Pacific Islander", "Hispanic" )
 
 entity_time_metric_categories_df <- data.frame(
     entity_id = sample(1:100, 1000, replace=TRUE),
