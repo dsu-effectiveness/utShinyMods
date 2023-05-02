@@ -11,6 +11,7 @@
 mod_sankey_diagram_ui <- function(id){
   ns <- NS(id)
   tagList(
+    shiny::uiOutput( ns("module_title_ui") ),
     shiny::sidebarLayout(
       shiny::sidebarPanel(
         shiny::uiOutput(ns("cohort")),
@@ -27,24 +28,7 @@ mod_sankey_diagram_ui <- function(id){
           ),
           selected = "spring_returned"
         ),
-        shiny::selectInput(
-          ns("first_level"),
-          "Select First-Level Group",
-          choices = group_choices(),
-          selected = "college"
-        ),
-        shiny::selectInput(
-          ns("second_level"),
-          "Select Second-Level Group",
-          choices = group_choices(),
-          selected = "gender"
-        ),
-        shiny::selectInput(
-          ns("third_level"),
-          "Select Third-Level Group",
-          choices = group_choices(),
-          selected = "race_ethnicity"
-        ),
+        shiny::uiOutput(ns("category_level_selectors"))
       ),
       shiny::mainPanel(
         utVizSankey::sankeyOutput(ns("retention_sankey"))
@@ -59,12 +43,56 @@ mod_sankey_diagram_ui <- function(id){
 #'
 #' @param id A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.
 #' @param df A data frame containing the data that will be used to create the Sankey diagram.
+#' @param module_title A character string to be used as the title of the module.
+#' @param module_sub_title A character string to be used as the sub-title of the module.
+#' @param category_level_options A vector of named column choices (used for the Sankey drilldown options)
+#' @param initial_selected_category_levels A vector of initial selected categories for drilldown (categories must also be in the category_level_options parameter)
 #'
 #' @export
 mod_sankey_diagram_server <- function(id,
-                                      df=utShinyMods::entity_time_metric_categories_df){
+                                      df=utShinyMods::entity_time_metric_categories_df,
+                                      module_title="Title of Module",
+                                      module_sub_title="Sub Title for module.",
+                                      category_level_options= c(
+                                          "College" = "college",
+                                          "Department" = "department",
+                                          "Program" = "program",
+                                          "Gender" = "gender",
+                                          "Race/Ethnicity" = "race_ethnicity"
+                                      ),
+                                      initial_selected_category_levels = c("college", "gender", "race_ethnicity") ){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+
+    output$module_title_ui <- renderUI({
+        tagList(
+            h2(module_title),
+            p(module_sub_title)
+        )
+    })
+
+    output$category_level_selectors = shiny::renderUI({
+        shiny::tagList(
+            shiny::selectInput(
+              ns("first_level"),
+              "Select First-Level Group",
+              choices = category_level_options,
+              selected = initial_selected_category_levels[1]
+            ),
+            shiny::selectInput(
+              ns("second_level"),
+              "Select Second-Level Group",
+              choices = category_level_options,
+              selected = initial_selected_category_levels[2]
+            ),
+            shiny::selectInput(
+              ns("third_level"),
+              "Select Third-Level Group",
+              choices = category_level_options,
+              selected = initial_selected_category_levels[3]
+            )
+        )
+    })
 
     output$cohort = shiny::renderUI({
       shiny::selectInput(
@@ -77,9 +105,9 @@ mod_sankey_diagram_server <- function(id,
 
     rvs = shiny::reactiveValues(
       select = c(
-        first_level = "college",
-        second_level = "gender",
-        third_level = "race_ethnicity"
+        first_level = initial_selected_category_levels[1],
+        second_level = initial_selected_category_levels[2],
+        third_level = initial_selected_category_levels[3]
       )
     )
 
@@ -189,21 +217,6 @@ check_update_select <- function(input, input_a, input_b, rvs) {
   }
 }
 
-#' Return all group choices
-#'
-#' Returns a vector of group of named column choices
-#' Used for the Sankey drilldown options
-group_choices <- function() {
-  choices = c(
-    c("College" = "college"),
-    c("Department" = "department"),
-    c("Program" = "program"),
-    c("Gender" = "gender"),
-    c("Race/Ethnicity" = "race_ethnicity")
-  )
-  return(choices)
-}
-
 #' Helper function for Sankey steps
 #'
 #' Returns a list of Sankey steps that can be
@@ -235,7 +248,6 @@ get_modal_footer <- function(retention_version) {
   }
   return(modal_footer)
 }
-
 
 #' Get version
 #'
