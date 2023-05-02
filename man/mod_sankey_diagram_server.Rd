@@ -6,13 +6,26 @@
 \usage{
 mod_sankey_diagram_server(
   id,
-  df = utShinyMods::entity_time_metric_categories_df
+  df = utShinyMods::entity_time_metric_categories_df,
+  module_title = "Title of Module",
+  module_sub_title = "Sub Title for module.",
+  category_level_options = c(College = "college", Department = "department", Program =
+    "program", Gender = "gender", `Race/Ethnicity` = "race_ethnicity"),
+  initial_selected_category_levels = c("college", "gender", "race_ethnicity")
 )
 }
 \arguments{
 \item{id}{A character string giving the id of the module. This id should be unique and is used to identify the module when it is used in a Shiny app.}
 
 \item{df}{A data frame containing the data that will be used to create the Sankey diagram.}
+
+\item{module_title}{A character string to be used as the title of the module.}
+
+\item{module_sub_title}{A character string to be used as the sub-title of the module.}
+
+\item{category_level_options}{A vector of named column choices (used for the Sankey drilldown options)}
+
+\item{initial_selected_category_levels}{A vector of initial selected categories for drilldown (categories must also be in the category_level_options parameter)}
 }
 \description{
 This function provides the server-side logic for the `sankey_diagram` Shiny module. This function must be used in conjunction with the `mod_sankey_diagram_ui` function in order to create a complete Shiny module.

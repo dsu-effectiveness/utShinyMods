@@ -18,7 +18,7 @@ app_ui <- function(request) {
       tabPanel("Sunburst", mod_sunburst_diagram_ui("sunburst_diagram_example")),
       tabPanel("Summarized Data Table", mod_summarized_data_table_ui("summarized_data_table_example")),
       tabPanel("Downloadable Data Table", mod_downloadable_data_table_ui("downloadable_data_table_example")),
-      tabPanel("Sankey - In Development", mod_sankey_diagram_ui("sankey_diagram_example")),
+      tabPanel("Sankey", mod_sankey_diagram_ui("sankey_diagram_example")),
       tabPanel("Help", mod_help_ui("help_example"))
     )
   )
