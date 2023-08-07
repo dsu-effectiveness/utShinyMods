@@ -1,24 +1,21 @@
 #' Generate Line Chart
 #'
-#' @param df
-#' @param x
-#' @param y
-#' @param x_label
-#' @param y_label
-#' @param x_is_continuous
-#' @param x_angle
-#' @param x_format
-#' @param y_format
-#' @param grouping
-#' @param group_labeling
-#' @param legend_title
-#' @param legend_position
-#' @param lin_reg
+#' @param   df   A data-frame.
+#' @param   x,y   The column of `df` to plot on the x- or y-axis (as a symbol, not a string).
+#' @param   x_label,y_label   Labels for the x- or y-axis.
+#' @param   x_is_continuous   Is the x-variable a continuous variate?
+#' @param   x_angle   Tick-angle for the x-axis.
+#' @param   x_format,y_format   Functions for formatting the x- and y- labels.
+#' @param   grouping   Column for grouping the plotted data.
+#' @param   group_labeling   Label for the groups in the plotted data.
+#' @param   legend_title   Title for the legend.
+#' @param   legend_position   Position for the legend.
+#' @param   lin_reg   Should a linear-regression be overplotted on the graph?
 #'
-#' @return
+#' @return   A `ggplotly` object.
+#'
 #' @export
-#'
-#' @examples
+
 generate_line_chart <- function(df,
                                 x,
                                 y,
@@ -85,10 +82,13 @@ generate_line_chart <- function(df,
 #' Create conditional panel containing pickerInput
 #' created by `conditional_filter_input()`.
 #' This function is used in the UI (contains `shiny::uiOutput`)
-#' @param col_name Which column to create filter for
-#' @param session Shiny session
+#'
+#' @param   col_name   Which column to create filter for?
+#' @param   panel_name   Name of the panel.
+#' @param   session   Shiny session.
 #'
 #' @export
+
 conditional_filter_panel <- function(col_name, panel_name, session) {
   ns <- session$ns
   shiny::conditionalPanel(
@@ -103,12 +103,14 @@ conditional_filter_panel <- function(col_name, panel_name, session) {
 #' Create pickerInput to be used in
 #' conditional panel created by `conditional_filter_panel()`
 #' This function is used in the server (contains `shiny::renderUI`)
-#' @param df A dataframe like object.
-#' @param col_name Which column, contained in df, to create filter for.
-#' @param input_label Label for pickerInput
-#' @param session Shiny session
+#'
+#' @param   df   A dataframe like object.
+#' @param   col_name   Which column, contained in df, to create filter for.
+#' @param   input_label   Label for `pickerInput`.
+#' @param   session   Shiny session.
 #'
 #' @export
+
 conditional_filter_input <- function(df, col_name, input_label, session) {
   ns <- session$ns
   shiny::renderUI({

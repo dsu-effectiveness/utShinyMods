@@ -26,7 +26,30 @@ generate_line_chart(
 )
 }
 \arguments{
-\item{lin_reg}{}
+\item{df}{A data-frame.}
+
+\item{x, y}{The column of `df` to plot on the x- or y-axis (as a symbol, not a string).}
+
+\item{x_label, y_label}{Labels for the x- or y-axis.}
+
+\item{x_is_continuous}{Is the x-variable a continuous variate?}
+
+\item{x_angle}{Tick-angle for the x-axis.}
+
+\item{x_format, y_format}{Functions for formatting the x- and y- labels.}
+
+\item{grouping}{Column for grouping the plotted data.}
+
+\item{group_labeling}{Label for the groups in the plotted data.}
+
+\item{legend_title}{Title for the legend.}
+
+\item{legend_position}{Position for the legend.}
+
+\item{lin_reg}{Should a linear-regression be overplotted on the graph?}
+}
+\value{
+A `ggplotly` object.
 }
 \description{
 Generate Line Chart

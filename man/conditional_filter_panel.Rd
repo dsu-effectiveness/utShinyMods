@@ -7,9 +7,11 @@
 conditional_filter_panel(col_name, panel_name, session)
 }
 \arguments{
-\item{col_name}{Which column to create filter for}
+\item{col_name}{Which column to create filter for?}
 
-\item{session}{Shiny session}
+\item{panel_name}{Name of the panel.}
+
+\item{session}{Shiny session.}
 }
 \description{
 Create conditional panel containing pickerInput

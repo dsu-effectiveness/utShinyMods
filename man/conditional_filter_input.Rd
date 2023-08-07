@@ -11,9 +11,9 @@ conditional_filter_input(df, col_name, input_label, session)
 
 \item{col_name}{Which column, contained in df, to create filter for.}
 
-\item{input_label}{Label for pickerInput}
+\item{input_label}{Label for `pickerInput`.}
 
-\item{session}{Shiny session}
+\item{session}{Shiny session.}
 }
 \description{
 Create pickerInput to be used in
