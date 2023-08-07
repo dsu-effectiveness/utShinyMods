@@ -52,7 +52,8 @@ mod_over_time_line_chart_ui <- function(id) {
 #' @param   module_title   Title for the chart.
 #' @param   module_sub_title   Subtitle for the chart.
 #'
-#' @importFrom magrittr %>%
+#' @importFrom   magrittr   %>%
+#' @importFrom   rlang   .data
 #'
 #' @export
 
@@ -149,8 +150,8 @@ mod_over_time_line_chart_server <- function(id,
       )
 
       generate_line_chart(reactive_plot_df,
-        x = x_plot,
-        y = y_plot,
+        x = .data[["x_plot"]],
+        y = .data[["y_plot"]],
         x_is_continuous = x_is_continuous,
         grouping = grouping,
         x_label = names(time_col),
