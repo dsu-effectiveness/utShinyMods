@@ -126,7 +126,12 @@ mod_over_time_line_chart_server <- function(id,
 
       plot_df <- df %>%
         tidyr::unite(grouping, input$grouping_selection, remove = FALSE, sep = " | ") %>%
-        dplyr::filter(dplyr::across(input$filter_control, ~ .x %in% input[[glue::glue("{dplyr::cur_column()}_filter")]])) %>%
+        dplyr::filter(
+          dplyr::across(
+            input$filter_control,
+            ~ .x %in% input[[glue::glue("{dplyr::cur_column()}_filter")]]
+          )
+        ) %>%
         dplyr::group_by(grouping, !!rlang::sym(time_col)) %>%
         dplyr::summarize(y_plot = metric_summarization_function(!!rlang::sym(metric_col))) %>%
         dplyr::mutate(x_plot = !!rlang::sym(time_col)) %>%
@@ -145,7 +150,8 @@ mod_over_time_line_chart_server <- function(id,
         reactive_plot_df[["x_plot"]] <- as.factor(reactive_plot_df[["x_plot"]])
       }
 
-      group_label <- ngram::concatenate(names(grouping_cols)[grouping_cols %in% input$grouping_selection],
+      group_label <- ngram::concatenate(
+        names(grouping_cols)[grouping_cols %in% input$grouping_selection],
         collapse = " | "
       )
 
