@@ -19,13 +19,23 @@ mod_over_time_line_chart_server(
 )
 }
 \arguments{
-\item{id}{A unique identifier, linking the UI to the Server}
+\item{id}{A unique identifier, linking the UI to the Server.}
 
 \item{df}{A data frame.}
 
-\item{input, output, session}{Internal parameters for {shiny}.}
+\item{time_col}{The time column.}
 
-\item{chart_sub_title}{}
+\item{metric_col}{The metric column.}
+
+\item{metric_summarization_function}{A function for summarising the metric.}
+
+\item{grouping_cols}{The columns to be used for grouping.}
+
+\item{filter_cols}{The columns to be used for filtering.}
+
+\item{module_title}{Title for the chart.}
+
+\item{module_sub_title}{Subtitle for the chart.}
 }
 \description{
 To be copied in the UI
@@ -35,8 +45,10 @@ mod_over_time_line_chart_ui("over_time_line_chart_1")
 To be copied in the server
 mod_over_time_line_chart_server("over_time_line_chart_1")'
 
-Justification for using extra parameters in the Server function, can be found in the following documentation:
+Justification for using extra parameters in the Server function, can be found in the following
+documentation:
 https://shiny.rstudio.com/articles/modules.html
 Quote from documentation:
-"You can define the function so that it takes any number of additional parameters, including ..., so that whoever uses the module can customize what the module does."
+"You can define the function so that it takes any number of additional parameters, including ...,
+so that whoever uses the module can customize what the module does."
 }

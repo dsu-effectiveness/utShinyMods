@@ -33,25 +33,27 @@ mod_over_time_line_chart_ui <- function(id){
 #' To be copied in the server
 #' mod_over_time_line_chart_server("over_time_line_chart_1")'
 #'
-#' Justification for using extra parameters in the Server function, can be found in the following documentation:
+#' Justification for using extra parameters in the Server function, can be found in the following
+#' documentation:
 #' https://shiny.rstudio.com/articles/modules.html
 #' Quote from documentation:
-#' "You can define the function so that it takes any number of additional parameters, including ..., so that whoever uses the module can customize what the module does."
+#' "You can define the function so that it takes any number of additional parameters, including ...,
+#' so that whoever uses the module can customize what the module does."
 #'
-#' @param id A unique identifier, linking the UI to the Server
-#' @param input,output,session Internal parameters for {shiny}.
-#' @param df A data frame.
-#' @param time_col
-#' @param metric_col
-#' @param metric_summarization_function
-#' @param grouping_cols
-#' @param filter_cols
-#' @param chart_title
-#' @param chart_sub_title
+#' @param   id   A unique identifier, linking the UI to the Server.
+#' @param   df   A data frame.
+#' @param   time_col   The time column.
+#' @param   metric_col   The metric column.
+#' @param   metric_summarization_function   A function for summarising the metric.
+#' @param   grouping_cols   The columns to be used for grouping.
+#' @param   filter_cols   The columns to be used for filtering.
+#' @param   module_title   Title for the chart.
+#' @param   module_sub_title   Subtitle for the chart.
 #'
 #' @importFrom magrittr %>%
 #'
 #' @export
+
 mod_over_time_line_chart_server <- function(id,
                                             df=utShinyMods::entity_time_metric_categories_df,
                                             time_col=c("Time"="time_column"),
@@ -156,4 +158,3 @@ mod_over_time_line_chart_server <- function(id,
 
   })
 }
-
