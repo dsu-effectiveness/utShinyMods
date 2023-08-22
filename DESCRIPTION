@@ -1,6 +1,6 @@
 Package: utShinyMods
 Title: utShinyMods Reports
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     person("LaVoy", , , "brentenlavoy@gmail.com", role = c("cre", "aut"))
 Description: A {golem} based Shiny app package, designed to meet all
